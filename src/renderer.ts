@@ -27,7 +27,7 @@
  */
 
 import './index.css';
-
+import * as callbackList from "./callbacks/renderer";
 //import light from "./theme/light.lazy.css";
 //import dark from "./theme/dark.lazy.css";
 
@@ -43,11 +43,3 @@ function sendRequest(val:any, callback:any) {
 });
 
 sendRequest("yeeet", "yeetfn");
-
-const callbackList = {
-    "yeetfn": yeetfn
-}
-
-function yeetfn(args:any) {
-    console.log("yeet " + args);
-}

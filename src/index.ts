@@ -1,5 +1,5 @@
 import { app, ipcMain, BrowserWindow } from 'electron';
-import * as callbackList from "./main/indexCallbacks";
+import * as callbackList from "./callbacks/main";
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: any;
 
@@ -25,7 +25,6 @@ const createWindow = (): void => {
   mainWindow.webContents.openDevTools();
 
   ipcMain.on("request", (IpcMainEvent, args) => {
-    console.log(args.data);
     args.data.val = (callbackList as any)[args.data.callback](args.data.val);
 
     mainWindow.webContents.send("response", {
