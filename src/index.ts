@@ -1,4 +1,5 @@
-import { app, BrowserWindow } from 'electron';
+import { app, ipcMain, BrowserWindow } from 'electron';
+import * as callbackList from "./main/indexCallbacks";
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: any;
 
@@ -11,7 +12,8 @@ const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     webPreferences: {
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      contextIsolation: true
     }
   });
   mainWindow.setMenuBarVisibility(false);
@@ -21,6 +23,16 @@ const createWindow = (): void => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+
+  ipcMain.on("request", (IpcMainEvent, args) => {
+    console.log(args.data);
+    args.data.val = (callbackList as any)[args.data.callback](args.data.val);
+
+    mainWindow.webContents.send("response", {
+        callback: args.data.callback,
+        val: args.data.val
+    });
+});
 };
 
 // This method will be called when Electron has finished
@@ -47,3 +59,5 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+//import * as userSettings from "./fs/userSettings";

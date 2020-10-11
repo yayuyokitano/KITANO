@@ -28,4 +28,26 @@
 
 import './index.css';
 
+//import light from "./theme/light.lazy.css";
+//import dark from "./theme/dark.lazy.css";
+
 console.log('👋 This message is being logged by "renderer.js", included via webpack');
+
+function sendRequest(val:any, callback:any) {
+    (window as any).mainApi.request({val, callback});
+}
+
+(window as any).mainApi.onResponse((args:any) => {
+    console.log(args);
+    (callbackList as any)[args.callback](args.val);
+});
+
+sendRequest("yeeet", "yeetfn");
+
+const callbackList = {
+    "yeetfn": yeetfn
+}
+
+function yeetfn(args:any) {
+    console.log("yeet " + args);
+}
