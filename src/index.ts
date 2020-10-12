@@ -13,7 +13,8 @@ const createWindow = (): void => {
   const mainWindow = new BrowserWindow({
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-      contextIsolation: true
+      contextIsolation: true,
+      sandbox: true
     }
   });
   mainWindow.setMenuBarVisibility(false);
