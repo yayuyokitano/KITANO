@@ -25,12 +25,16 @@ const createWindow = (): void => {
   mainWindow.webContents.openDevTools();
 
   ipcMain.on("request", (IpcMainEvent, args) => {
-    args.data.val = (callbackList as any)[args.data.callback](args.data.val);
+    console.log(args.data);
+    const returnValue = (callbackList as any)[args.data.callback](args.data.val);
 
-    mainWindow.webContents.send("response", {
+    Promise.resolve(returnValue).then(returnVal => {
+      mainWindow.webContents.send("response", {
         callback: args.data.callback,
-        val: args.data.val
-    });
+        val: returnVal
+      });
+    })
+    
 });
 };
 
@@ -56,7 +60,9 @@ app.on('activate', () => {
   }
 });
 
+process.on('uncaughtException', e => {
+  console.log(e);
+})
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
-
-//import * as userSettings from "./fs/userSettings";

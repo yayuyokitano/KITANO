@@ -1,3 +1,2 @@
-export function yeetfn(args:any) {
-    return args + args;
-}
+/// getSetting, setSettings, createSettings, settingsExist
+export * from "../fs/userSettings";

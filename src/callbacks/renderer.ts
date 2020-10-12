@@ -1,3 +1,2 @@
-export function yeetfn(args:any) {
-    console.log("yeet " + args);
-}
+/// getSetting, setSettings, createSettings, settingsExist
+export * from "./renderfn/userSettingsRender";

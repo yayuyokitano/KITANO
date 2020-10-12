@@ -33,13 +33,13 @@ import * as callbackList from "./callbacks/renderer";
 
 console.log('👋 This message is being logged by "renderer.js", included via webpack');
 
-function sendRequest(val:any, callback:any) {
-    (window as any).mainApi.request({val, callback});
-}
-
 (window as any).mainApi.onResponse((args:any) => {
     console.log(args);
-    (callbackList as any)[args.callback](args.val);
+    try {
+        (callbackList as any)[args.callback](args.val);
+    } catch(err) {
+        console.log(err);
+    }
 });
 
-sendRequest("yeeet", "yeetfn");
+import "./listeners/userSettingsListener";
