@@ -5,8 +5,16 @@
     <title>Hello World!</title>
   </head>
   <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
-    <button id="mainButton">click</button>
+    <div id="backgroundDiv">
+      <div class="mainPageNav">
+        <button onclick="listeners.openSettings(this)">Settings</button>
+      </div>
+      <h1>💖 Hello World!</h1>
+      <p>Welcome to your Electron application.</p>
+    </div>
+    <div id="popupDiv" class="hidden">
+      <h1 id="popupHeadline">yeey</h1>
+      <div id="popupDetails"></div>
+    </div>
   </body>
 </html>

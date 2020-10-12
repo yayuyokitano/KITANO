@@ -25,7 +25,7 @@ const createWindow = (): void => {
   mainWindow.webContents.openDevTools();
 
   ipcMain.on("request", (IpcMainEvent, args) => {
-    const returnValue = (callbackList as any)[args.data.callback](args.data.val);
+    const returnValue = (callbackList as any)[args.data.fn](args.data.val);
 
     Promise.resolve(returnValue).then(returnVal => {
       if (returnVal !== null) {

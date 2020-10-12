@@ -32,6 +32,9 @@ import * as callbackList from "./callbacks/renderer";
 //import dark from "./theme/dark.lazy.css";
 
 (window as any).mainApi.onResponse((args:any) => {
+    if (args.callback === "null") {
+        return;
+    }
     try {
         (callbackList as any)[args.callback](args.val);
     } catch(err) {
@@ -40,3 +43,5 @@ import * as callbackList from "./callbacks/renderer";
 });
 
 import "./listeners/userSettingsListener";
+import * as listenerList from "./listeners/mainListenerCall";
+(window as any).listeners = listenerList;
