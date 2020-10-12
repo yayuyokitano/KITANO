@@ -5,6 +5,14 @@ import * as path from "path";
 const configPath = path.join(app.getPath("userData"), "config.json");
 
 export async function getSetting(navInstruction: string[]) {
+    const configStatus = await settingsExist("");
+    if (typeof configStatus === "string") {
+        console.error("ERROR: " + configStatus);
+        return null;
+    } else if (configStatus === 0) {
+        await createSettings("");
+    }
+
     let fileContent = JSON.parse(
         (await fs.readFile(configPath)).toString()
     );
@@ -12,14 +20,15 @@ export async function getSetting(navInstruction: string[]) {
         fileContent = fileContent[property];
     }
     return fileContent;
+    
 }
 
-export async function setSettings(settings: object) {
+export async function setSettings(settings: any) {
     await fs.writeFile(configPath, JSON.stringify(settings), "utf-8");
-    return;
+    return "complete";
 }
 
-export async function createSettings(unused:any) {
+export async function createSettings(unused:any):Promise<null> {
 
     const defaultSettings = {
         appearance: {
@@ -28,23 +37,32 @@ export async function createSettings(unused:any) {
     }
 
     await setSettings(defaultSettings);
-    return;
+    return null;
 }
 
 export async function settingsExist(unused:any) {
     try {
-        console.log("sd");
-        await fs.open(configPath, "r");
-        console.log("ya");
-        return "success";
+        let file = await fs.open(configPath, "r");
+        await file.close();
+        return 1;
     } catch(e) {
-        console.log(e);
-        console.log("e");
-        return "no exis";
+        if(e.code === "ENOENT") {
+            return 0;
+        } else {
+            return e.code;
+        }
     }
 }
 
-export function logg(unused:any) {
-    console.log("xd");
-    return "abcvs";
+export async function modifySetting(args:any): Promise<any> {
+    const settings = { settings: await getSetting([]), change: args};
+    if (settings.change) {
+        let target = settings.settings;
+        for (let i = 0; i < settings.change.navInstruction.length - 1; i++) {
+            target = target[settings.change.navInstruction[i]];
+        }
+        target[settings.change.navInstruction[settings.change.navInstruction.length - 1]] = settings.change.val;
+    }
+    await setSettings(settings.settings);
+    return null;
 }

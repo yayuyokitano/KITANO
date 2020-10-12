@@ -1,4 +1,4 @@
-import { app, ipcMain, BrowserWindow } from 'electron';
+import { app, ipcMain, BrowserWindow, ipcRenderer } from 'electron';
 import * as callbackList from "./callbacks/main";
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: any;
@@ -25,14 +25,15 @@ const createWindow = (): void => {
   mainWindow.webContents.openDevTools();
 
   ipcMain.on("request", (IpcMainEvent, args) => {
-    console.log(args.data);
     const returnValue = (callbackList as any)[args.data.callback](args.data.val);
 
     Promise.resolve(returnValue).then(returnVal => {
-      mainWindow.webContents.send("response", {
-        callback: args.data.callback,
-        val: returnVal
-      });
+      if (returnVal !== null) {
+        mainWindow.webContents.send("response", {
+          callback: args.data.callback,
+          val: returnVal
+        });
+      }
     })
     
 });
@@ -61,7 +62,7 @@ app.on('activate', () => {
 });
 
 process.on('uncaughtException', e => {
-  console.log(e);
+  console.error(e);
 })
 
 // In this file you can include the rest of your app's specific main process
