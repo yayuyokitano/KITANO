@@ -31,14 +31,11 @@ import * as callbackList from "./callbacks/renderer";
 //import light from "./theme/light.lazy.css";
 //import dark from "./theme/dark.lazy.css";
 
-console.log('👋 This message is being logged by "renderer.js", included via webpack');
-
 (window as any).mainApi.onResponse((args:any) => {
-    console.log(args);
     try {
         (callbackList as any)[args.callback](args.val);
     } catch(err) {
-        console.log(err);
+        console.error(err);
     }
 });
 
