@@ -27,9 +27,8 @@
  */
 
 import './index.css';
-import * as callbackList from "./callbacks/renderer";
-//import light from "./theme/light.lazy.css";
-//import dark from "./theme/dark.lazy.css";
+import * as callbackList from "./renderer/functions";
+
 
 (window as any).mainApi.onResponse((args:any) => {
     if (args.callback === "null") {
@@ -45,3 +44,5 @@ import * as callbackList from "./callbacks/renderer";
 import "./listeners/userSettingsListener";
 import * as listenerList from "./listeners/mainListenerCall";
 (window as any).listeners = listenerList;
+
+import "./renderer/initialize";
