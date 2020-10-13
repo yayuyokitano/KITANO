@@ -1,8 +1,7 @@
 :root {
     --primary-text: #19032E;
     --primary-background: #FFFFFF;
-        
-    --popup-background: #FFFFFF;
 
     --accent-color: #DCCCEB;
+    --accent-highlight: #F8F0FF;
 }

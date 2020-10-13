@@ -60,3 +60,10 @@ select {
   padding: 0.25rem;
   border-radius: 3px;
 }
+
+button:hover,
+button:focus,
+select:hover,
+select:focus {
+  background-color: var(--accent-highlight)
+}
