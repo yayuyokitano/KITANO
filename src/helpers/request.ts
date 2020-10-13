@@ -1,3 +1,3 @@
-export function sendRequest(val:any, fn:any, callback:any) {
+export function sendRequest(val:any, fn:string, callback:string) {
     (window as any).mainApi.request({val, fn, callback});
 }

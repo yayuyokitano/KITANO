@@ -1,2 +1,2 @@
 /// getSetting, setSettings, createSettings, settingsExist
-export * from "./renderfn/userSettingsRender";
+export * from "./userSettingsMain";

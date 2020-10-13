@@ -1,4 +1,3 @@
-import * as request from "../helpers/request";
 import * as listenerList from "./mainListenerCall";
 
 window.addEventListener("click", e => {

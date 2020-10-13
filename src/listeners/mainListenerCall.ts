@@ -1,4 +1,5 @@
 import * as request from "../helpers/request";
+import * as themes from "../themes/themes";
 
 export async function openSettings(targetElement:HTMLElement) {
     if (openPopup(targetElement) === "success") {
@@ -23,6 +24,10 @@ function openPopup(targetElement:HTMLElement):null|string {
     return "success";
 }
 
-export function changeTheme(theme:string) {
-    request.sendRequest({ navInstruction: ["appearance", "theme"], val: theme }, "modifySetting", "null");
+export function changeTheme(newTheme:string) {
+    request.sendRequest({ navInstruction: ["appearance", "theme"], val: newTheme }, "modifySetting", "null");
+    for (let theme of Object.keys(themes)) {
+        (themes as any)[theme].unuse();
+    }
+    (themes as any)[newTheme].use();
 }

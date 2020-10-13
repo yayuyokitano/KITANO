@@ -1,5 +1,5 @@
 import { app, ipcMain, BrowserWindow, ipcRenderer } from 'electron';
-import * as callbackList from "./callbacks/main";
+import * as callbackList from "./main/functions";
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: any;
 
