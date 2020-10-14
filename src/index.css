@@ -22,6 +22,10 @@ body {
   text-align: center;
 }
 
+.mainContent {
+  margin-bottom: 15vh;
+}
+
 .hidden {
   visibility: hidden;
   opacity: 0;
@@ -44,6 +48,7 @@ body {
 .mainPageNav {
   background-color: var(--accent-color);
   display: flex;
+  transition: 400ms;
 }
 
 button,
@@ -68,7 +73,6 @@ button {
 
 select {
   padding: 0.25rem;
-  border-radius: 3px;
 }
 
 button:not(.disabledBtn):hover,
@@ -80,7 +84,7 @@ select:focus {
 
 .deckList {
   list-style-type: none;
-  padding-left: 0;
+  padding: 0;
   max-width: 800px;
   margin: 0 auto;
   border-top: 1px solid var(--accent-highlight);
@@ -117,6 +121,34 @@ a {
   transition: 200ms;
 }
 
-.deckBtn svg {
-  fill: var(--primary-text)
+svg {
+  fill: var(--primary-text);
+}
+
+.menuFooter {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  height: 20vh;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+}
+
+.newDeck {
+  font-size: 1.3rem;
+  padding: 1rem 2rem;
+  background-color: var(--secondary-accent-color);
+  display: flex;
+  align-items: center;
+}
+
+.newDeck:hover:not(h1) {
+  background-color: var(--secondary-accent-highlight);
+}
+
+.newDeck svg {
+  fill: var(--secondary-text);
+  margin-right: 0.5rem;
+  margin-bottom: 2px;
 }
