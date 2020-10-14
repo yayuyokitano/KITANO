@@ -10,7 +10,8 @@ export async function openSettings(targetElement:HTMLElement) {
 
 export function closePopup() {
     document.querySelectorAll(".faded button").forEach( e => {
-        (e as HTMLElement).tabIndex = 0;
+        (e as HTMLInputElement).tabIndex = 0;
+        (e as HTMLInputElement).classList.remove("disabledBtn");
     })
     document.querySelector("#popupDiv").classList.add("hidden");
     document.querySelector("#backgroundDiv").classList.remove("faded");
@@ -24,7 +25,8 @@ function openPopup(targetElement:HTMLElement):null|string {
         document.querySelector("#popupDiv").classList.remove("hidden");
         document.querySelector("#backgroundDiv").classList.add("faded");
         document.querySelectorAll(".faded button").forEach( e => {
-            (e as HTMLElement).tabIndex = -1;
+            (e as HTMLInputElement).tabIndex = -1;
+            (e as HTMLInputElement).classList.add("disabledBtn");
         })
     })
     return "success";

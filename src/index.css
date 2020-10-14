@@ -50,10 +50,14 @@ select {
   border: none;
   font-size: 1rem;
   outline: none;
-  cursor: pointer;
   background-color: var(--accent-color);
   color: var(--primary-text);
   transition: 400ms;
+}
+
+button:not(.disabledBtn),
+select {
+  cursor: pointer;
 }
 
 button {
@@ -66,8 +70,8 @@ select {
   border-radius: 3px;
 }
 
-button:hover,
-button:focus,
+button:not(.disabledBtn):hover,
+button:not(.disabledBtn):focus,
 select:hover,
 select:focus {
   background-color: var(--accent-highlight)
