@@ -18,7 +18,8 @@ body {
 
 #popupDiv,
 .mainContent {
-  padding-left: 1rem;
+  padding: 0 1rem;
+  text-align: center;
 }
 
 .hidden {
@@ -75,4 +76,47 @@ button:not(.disabledBtn):focus,
 select:hover,
 select:focus {
   background-color: var(--accent-highlight)
+}
+
+.deckList {
+  list-style-type: none;
+  padding-left: 0;
+  max-width: 800px;
+  margin: 0 auto;
+  border-top: 1px solid var(--accent-highlight);
+}
+
+.deckList li {
+  padding: 0 0.3rem;
+  line-height: 2;
+  margin: 0;
+  border-bottom: 1px solid var(--accent-highlight);
+  vertical-align: middle;
+}
+
+.deckList li:hover {
+  background-color: var(--accent-highlight);
+}
+
+a {
+  cursor: pointer;
+}
+
+.gotoDeck {
+  display: flex;
+  justify-content: space-between;
+}
+
+.deckBtnList {
+  display: flex;
+}
+
+.deckBtn {
+  background-color: var(--primary-background);
+  padding: 0 0.5rem;
+  transition: 200ms;
+}
+
+.deckBtn svg {
+  fill: var(--primary-text)
 }
