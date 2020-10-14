@@ -6,3 +6,9 @@ window.addEventListener("click", e => {
         listenerList.closePopup();
     }
 })
+
+window.addEventListener("keydown", e => {
+    if (e.key === "Escape" && document.querySelector(".faded")) {
+        listenerList.closePopup();
+    }
+})

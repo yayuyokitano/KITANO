@@ -40,6 +40,11 @@ body {
   cursor: default;
 }
 
+.mainPageNav {
+  background-color: var(--accent-color);
+  display: flex;
+}
+
 button,
 select {
   border: none;
