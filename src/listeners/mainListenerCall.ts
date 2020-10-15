@@ -8,6 +8,14 @@ export async function openSettings(targetElement:HTMLElement) {
     }
 }
 
+export async function openImport(targetElement:HTMLElement) {
+    if (openPopup(targetElement) === "success") {
+        (document.querySelector("#popupHeadline") as HTMLElement).innerText = "";
+        (document.querySelector("#popupDetails") as HTMLElement).innerHTML = "<div class='fileUpload'><h1>Import Deck</h1><p>You can click here or drag a deck file (.apkg) into the window to import the deck</div>";
+
+    }
+}
+
 export function closePopup() {
     document.querySelectorAll(".faded button").forEach( e => {
         (e as HTMLInputElement).tabIndex = 0;

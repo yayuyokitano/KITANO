@@ -1,7 +1,6 @@
 import * as listenerList from "./mainListenerCall";
 
 window.addEventListener("click", e => {
-    console.log(e.target);
     if ((e.target as HTMLElement).closest(".faded")) {
         listenerList.closePopup();
     }
