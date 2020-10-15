@@ -8,9 +8,13 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
   app.quit();
 }
 
+let mainWindow:BrowserWindow;
+
+console.log(process.platform);
+
 const createWindow = (): void => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
       contextIsolation: true,
@@ -37,9 +41,15 @@ const createWindow = (): void => {
       }
     })
     
-});
+  });
 };
 
+export function sendData(val:any, callback:string) {
+  mainWindow.webContents.send("response", {
+    callback: callback,
+    val: val
+  });
+}
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.

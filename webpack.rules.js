@@ -1,3 +1,5 @@
+
+
 module.exports = [
   // Add support for native node modules
   {
@@ -23,5 +25,5 @@ module.exports = [
         transpileOnly: true
       }
     }
-  },
+  }
 ];
