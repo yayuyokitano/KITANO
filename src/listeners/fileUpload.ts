@@ -43,13 +43,19 @@ async function handleFiles(droppedFiles:any) {
 }
 
 export function progressUpdate(progress:any) {
-    (document.querySelector(".progressVal") as HTMLElement).style.width = `${progress.percent}%`;
+    const progressBar = document.querySelector(".progressVal") as HTMLElement;
+    if (progressBar.getAttribute("currMin") === "-1" && progress.percent > 0) {
+        progressBar.setAttribute("currMin", progress.percent);
+    }
+    const currMin = parseInt(progressBar.getAttribute("currMin"));
+    const currPercent = 100 * (progress.percent - currMin) / (100 - currMin);
+    console.log(currPercent + ", " + progress.percent);
+    progressBar.style.width = `${currPercent}%`;
 }
 
 export function endExtract(droppedFiles:any) {
     (document.querySelector(".progressVal") as HTMLElement).style.width = `0%`;
     if (droppedFiles?.length) {
-        console.log(droppedFiles);
         iterateExtract(droppedFiles);
     } else {
         document.querySelector("#uploadProgressDiv").classList.add("hidden");
@@ -61,7 +67,7 @@ export function iterateExtract(droppedFiles:any) {
     let fileName = file.name.split(".");
     if (fileName.pop() === "apkg") {
         (document.querySelector(".currFile") as HTMLElement).innerText = file.name;
-        console.log(droppedFiles);
+        (document.querySelector(".progressVal") as HTMLElement).setAttribute("currMin", "-1");
         request.sendRequest({ fileName: fileName.join("_"), filePath: file.path, fileList: droppedFiles }, "extractDeck", "");
     }
 }
