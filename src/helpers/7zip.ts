@@ -3,6 +3,7 @@ import Seven from "node-7z";
 import * as main from "../index";
 import { app } from "electron";
 import * as path from "path";
+import * as database from "../main/databaseParser";
 
 const path7za = sevenBin.path7za;
 const pathTo7zip = path.join(__dirname, "native_modules", `7za${(process.platform === "win32") ? ".exe" : ""}`);
@@ -23,6 +24,7 @@ export async function extractDeck(args:any):Promise<any> {
        
     myStream.on('end', ():any => {
         main.sendData(args.fileList, "endExtract");
+        database.getDeckData(args.fileName);
     })
        
     myStream.on('error', (err:any):any => {

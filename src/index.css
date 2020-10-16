@@ -116,7 +116,32 @@ a {
 }
 
 .deckBtnList {
+  display: none;
+}
+
+li:hover .deckBtnList {
   display: flex;
+}
+
+.reviewCount {
+  display: flex;
+}
+
+li:hover .reviewCount {
+  display: none;
+}
+
+.reviewCount span {
+  margin-right: 0.75rem;
+  transition: 400ms;
+}
+
+.newReview {
+  color: var(--new-review);
+}
+
+.oldReview {
+  color: var(--old-review);
 }
 
 .deckBtn {
