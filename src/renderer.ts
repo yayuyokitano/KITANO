@@ -46,4 +46,4 @@ import * as listenerList from "./listeners/mainListenerCall";
 (window as any).listeners = listenerList;
 
 import "./renderer/initialize";
-import "./listeners/fileUpload";
+import "./listeners/deckManagement";
