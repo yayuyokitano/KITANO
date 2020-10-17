@@ -14,20 +14,50 @@ body {
   height: 80vh;
   top: 10vh;
   left: 10vw;
-  background-color: var(--primary-background);
   box-sizing: border-box;
   overflow: hidden;
-  transition: background-color 400ms, color 400ms, opacity 200ms, visibility 0;
+  transition: opacity 200ms, visibility 0;
+  display: flex;
 }
 
-#popupDiv,
-.mainContent {
-  padding: 0 1rem;
-  text-align: center;
+#popupSetting {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+  background-color: var(--accent-color);
+  transition: 400ms;
+}
+
+#popupSetting li {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  background-color: var(--accent-color);
+  color: var(--primary-text);
+  transition: 400ms;
+  outline: none;
+}
+
+#popupSetting li:hover,
+#popupSetting li:focus,
+#popupSetting .currLi {
+  background-color: var(--accent-highlight);
+}
+
+#popupContent {
+  background-color: var(--primary-background);
+  transition: 400ms;
+  flex: 1;
+  padding-left: 1rem;
+}
+
+#popupContent div:not(.display) {
+  display: none;
 }
 
 .mainContent {
   margin-bottom: 15vh;
+  padding: 0 1rem;
+  text-align: center;
 }
 
 .hidden {
@@ -70,7 +100,7 @@ select {
   cursor: pointer;
 }
 
-button {
+button:not(.newDeck) {
   border-radius: 0;
   padding: 0.5rem 1rem;
 }
@@ -92,6 +122,13 @@ select:focus {
   max-width: 800px;
   margin: 0 auto;
   border-top: 1px solid var(--accent-highlight);
+}
+
+.deckLabel {
+  overflow: hidden;
+  display: inline-block;
+  max-width: calc(100% - 120px);
+  white-space: nowrap;
 }
 
 .deckList li {
@@ -117,6 +154,7 @@ a {
   flex-basis: 100%;
   display: flex;
   justify-content: space-between;
+  max-width: 100%;
 }
 
 .deckBtnList {
@@ -166,36 +204,30 @@ svg {
   display: flex;
   height: 20vh;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   width: 100vw;
 }
 
-.menuFooter button {
-  font-size: 1.3rem;
+.newDeck {
+  width: min(max(min(90px, 15vw, 15vh), 70px), 20vh);
+  height: min(max(min(90px, 15vw, 15vh), 70px), 20vh);
+  border-radius: 100%;
   background-color: var(--secondary-accent-color);
   display: flex;
+  justify-content: center;
   align-items: center;
+  padding: 0;
+  margin-right: 5vw;
 }
 
-.menuFooter button:hover {
+.newDeck:hover {
   background-color: var(--secondary-accent-highlight);
 }
 
 .newDeck svg {
+  width: 70%;
+  height: 70%;
   fill: var(--secondary-text);
-  margin-right: 0.5rem;
-  margin-left: -0.4rem;
-  position: relative;
-  bottom: 1px;
-}
-
-.newDeck {
-  padding: 1rem 2rem;
-}
-
-.uploadDeck {
-  padding: calc(1rem + 2px) 2rem;
-  margin-left: 1rem;
 }
 
 .fileUpload {
@@ -266,4 +298,20 @@ svg {
 @keyframes appearFromTop {
   0% {  height: 0; }
   100% { height: 2rem; }
+}
+
+@media only screen and (max-width: 650px) {
+  #popupDiv {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .newDeck {
+    margin-right: 50%;
+    transform: translateX(50%);
+  }
 }

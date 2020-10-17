@@ -1,19 +1,14 @@
 import * as request from "../helpers/request";
 import * as themes from "../themes/themes";
+import * as template from "../helpers/template";
 
 export async function openSettings(targetElement:HTMLElement) {
-    if (openPopup(targetElement) === "success") {
-        (document.querySelector("#popupHeadline") as HTMLElement).innerText = "Settings";
-        request.sendRequest([], "getSetting", "setSettingsPopup");
-    }
+    openPopup(targetElement, template.settingMap);
+    request.sendRequest([], "getSetting", "setSettingsPopup");
 }
 
 export async function openImport(targetElement:HTMLElement) {
-    if (openPopup(targetElement) === "success") {
-        (document.querySelector("#popupHeadline") as HTMLElement).innerText = "";
-        (document.querySelector("#popupDetails") as HTMLElement).innerHTML = "<div class='fileUpload'><h1>Import Deck</h1><p>You can click here or drag a deck file (.apkg) into the window to import the deck</div>";
-
-    }
+    openPopup(targetElement, template.newDeck);
 }
 
 export function closePopup() {
@@ -25,10 +20,13 @@ export function closePopup() {
     document.querySelector("#backgroundDiv").classList.remove("faded");
 }
 
-function openPopup(targetElement:HTMLElement):null|string {
+function openPopup(targetElement:HTMLElement, settingMap:object):null|string {
     if (targetElement.closest(".faded")) {
         return null;
     }
+
+    template.popup(settingMap);
+
     setTimeout(() => {
         document.querySelector("#popupDiv").classList.remove("hidden");
         document.querySelector("#backgroundDiv").classList.add("faded");
@@ -37,7 +35,6 @@ function openPopup(targetElement:HTMLElement):null|string {
             (e as HTMLInputElement).classList.add("disabledBtn");
         })
     })
-    return "success";
 }
 
 export function changeTheme(newTheme:string) {

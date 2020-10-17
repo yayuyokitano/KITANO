@@ -15,13 +15,12 @@
         </ul>
       </div>
       <div class="menuFooter">
-        <button class="newDeck"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="30px" height="30px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> Create New Deck</button>
-        <button class="uploadDeck" onclick="listeners.openImport(this)">Import Deck</button>
+        <button class="newDeck" onclick="listeners.openImport(this)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="30px" height="30px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button>
       </div>
     </div>
     <div id="popupDiv" class="hidden">
-      <h1 id="popupHeadline">yeey</h1>
-      <div id="popupDetails"></div>
+      <ul id="popupSetting"></ul>
+      <div id="popupContent"></div>
     </div>
     <div id="uploadProgressDiv" class="hidden">
       <h3>Importing...</h3>

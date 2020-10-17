@@ -27,7 +27,7 @@ export function getDeckData(deck:string) {
     let returnData = [];
     
     for (let usedDeck of usedDecks) {
-        returnData.push({ name: decks[usedDeck].name, id: decks[usedDeck].id, numberNew: 10, numberRev: 0});
+        returnData.push({ name: decks[usedDeck].name, fileName: deck, id: decks[usedDeck].id, numberNew: 10, numberRev: 0});
     }
 
     main.sendData(returnData, "createDeckEntries");
