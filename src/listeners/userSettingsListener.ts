@@ -5,7 +5,7 @@ window.addEventListener("click", e => {
         listenerList.closePopup();
     }
     
-    const currli = (e.target as HTMLElement).closest("li");
+    const currli = (e.target as HTMLElement).closest("#popupSetting li") as HTMLElement;
     const currMenu = currli?.innerText;
 
     (e.target as HTMLElement).closest("button")?.blur();

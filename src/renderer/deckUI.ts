@@ -35,3 +35,7 @@ export function createDeckEntries (args:any) {
         }
     }
 }
+
+function deleteDeck() {
+    
+}
