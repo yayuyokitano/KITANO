@@ -46,7 +46,7 @@ export function deleteDeck(args: any) {
         fs.rmdirSync(path.join(decksPath, args.path), { recursive: true });
     } else {
         usedDecks = usedDecks.filter(e => e !== args.id);
-        
+
         db.prepare("DELETE FROM cards WHERE did = ?").run(args.id);
         const remaining:any = db.prepare("SELECT DISTINCT nid, id FROM cards").all();
 
@@ -78,6 +78,7 @@ export function deleteDeck(args: any) {
         }
 
         db.prepare("UPDATE col SET decks = ?, models = ?").run(JSON.stringify(newDecks), JSON.stringify(newModels));
+        db.prepare("VACUUM").run();
         db.close();
     }
     return null;

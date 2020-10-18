@@ -26,6 +26,7 @@ export function createDeckEntries (args:any) {
                     folderList += `${folder}::`;
 
                     if (!currElement) {
+                        //sorry
                         currElement = document.createElement("li");
                         currElement.classList.add("appearFromTop");
                         currElement.classList.add("folderElement");
