@@ -36,7 +36,7 @@ export async function getAllDecks(args:any):Promise<null> {
     return null;
 }
 
-export function deleteDeck(args: any) {
+export function deleteDeck(args: any):null {
     const db = new sqlite3(path.join(decksPath, args.path, "collection.anki2"));
     
     let { usedDecks, decks, models } = getDecks(db);
@@ -80,6 +80,10 @@ export function deleteDeck(args: any) {
         db.prepare("UPDATE col SET decks = ?, models = ?").run(JSON.stringify(newDecks), JSON.stringify(newModels));
         db.prepare("VACUUM").run();
         db.close();
+
+        //let worker = new Worker("removeUnusedMediaFiles");
+
+        removeUnusedMediaFiles(path.join(decksPath, args.path));
     }
     return null;
 }
@@ -99,4 +103,25 @@ function getDecks(db:any) {
         decks: JSON.parse(col.decks),
         models: JSON.parse(col.models)
     }
+}
+
+
+async function removeUnusedMediaFiles(deckPath:string) {
+    const collection = (await fs.promises.readFile(path.join(deckPath, "collection.anki2"))).toString();
+    const media = JSON.parse((await fs.promises.readFile(path.join(deckPath, "media"))).toString());
+    
+    let newMedia:any = {
+        count: media.count,
+        media: {}
+    }
+    
+    for (let [mediaFile, index] of Object.entries(media.media)) {
+        if (collection.indexOf(mediaFile) === -1) {
+            await fs.promises.unlink(path.join(deckPath, index.toString()));
+        } else {
+            newMedia.media[mediaFile] = index;
+        }
+    }
+    
+    fs.promises.writeFile(path.join(deckPath, "media"), JSON.stringify(newMedia));
 }

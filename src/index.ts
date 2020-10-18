@@ -1,4 +1,4 @@
-import { app, ipcMain, BrowserWindow, ipcRenderer } from 'electron';
+import { app, ipcMain, BrowserWindow } from 'electron';
 import * as callbackList from "./main/functions";
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: any;
@@ -10,6 +10,8 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 
 let mainWindow:BrowserWindow;
 
+console.log(process.platform);
+
 const createWindow = (): void => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -19,6 +21,7 @@ const createWindow = (): void => {
       sandbox: true
     }
   });
+
   mainWindow.setMenuBarVisibility(false);
 
   // and load the index.html of the app.
