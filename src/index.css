@@ -79,6 +79,18 @@ body.preload2 * {
   transition: 400ms;
 }
 
+#importDeckUpload {
+  position: absolute;
+  margin-left: -1rem;
+  margin-top: -1.2rem;
+  width: 100%;
+  height: 100vh;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  opacity: 0;
+}
+
 .faded {
   filter: brightness(0.4);
 }

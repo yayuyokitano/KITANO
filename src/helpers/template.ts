@@ -29,11 +29,11 @@ export function popup(settingMap:object) {
 }
 
 export const settingMap = {
-  Appearance: `<h2>Appearance</h2><span>Theme: </span><select class="themeSelect" onchange="listeners.changeTheme(this.value); this.blur()"><option value="light">Light</option><option value="dark">Dark</option></select>`
+  Appearance: `<h2>Appearance</h2><label>Theme: <select class="themeSelect" onchange="listeners.changeTheme(this.value); this.blur()"><option value="light">Light</option><option value="dark">Dark</option></select></label>`
 }
 
 export const newDeck = {
-  "New Deck": "<h1>yeet</h1>",
-  "Import Deck": "<h1>yeeet</h1>",
-  "New Folder": "<h1>yeeeet</h1>"
+  "New Deck": "<h2>Create New Deck</h2><label>Deck Name: <input type='text' id='newDeckName'></label>",
+  "Import Deck": "<input type='file' id='importDeckUpload' onchange='listeners.closePopup(); callbackList.handleFiles(Object.values(this.files))'><h2>Import Deck</h2><p>To import .ktn deck files, just drag the file(s) and drop them in the window.<br>You can also click this window to look for the file.</p><p>KITANO is also compatible with Anki's .apkg files.<br>Note that exporting to .apkg is currently not doable.</p>",
+  "New Folder": "<h2>Create New Folder</h2><label>Folder Name: <input type='text' id='newDeckName'></label><br><label>Choose a deck to include in the folder: <select id='folderDeckSelect'></select></label>"
 }

@@ -46,7 +46,10 @@ export function createDeckEntries (args:any) {
                 let newList = document.createElement("ul");
                 parElement.appendChild(newList);
             }
-            parElement = parElement.querySelector("ul") || parElement;
+
+            if (!parElement.classList.contains("deckList")) {
+                parElement = parElement.querySelector("ul") || parElement;
+            }
 
             let currli = document.createElement("li");
             currli.classList.add("appearFromTop");

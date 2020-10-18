@@ -24,7 +24,7 @@ window.addEventListener("drop", e => {
     handleFiles(droppedFiles);
 });
 
-async function handleFiles(droppedFiles:any) {
+export async function handleFiles(droppedFiles:any) {
     if (!document.querySelector("#uploadProgressDiv").classList.contains("hidden")) {
         document.querySelector("#uploadProgressDiv").classList.remove("shake");
         setTimeout(() => {
