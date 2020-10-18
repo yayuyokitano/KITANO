@@ -28,6 +28,7 @@
 
 import './index.css';
 import * as callbackList from "./renderer/functions";
+(window as any).callbackList = callbackList;
 
 
 (window as any).mainApi.onResponse((args:any) => {
