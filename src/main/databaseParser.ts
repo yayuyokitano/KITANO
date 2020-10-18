@@ -81,8 +81,6 @@ export function deleteDeck(args: any):null {
         db.prepare("VACUUM").run();
         db.close();
 
-        //let worker = new Worker("removeUnusedMediaFiles");
-
         removeUnusedMediaFiles(path.join(decksPath, args.path));
     }
     return null;
