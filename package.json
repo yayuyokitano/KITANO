@@ -1,5 +1,5 @@
 {
-  "name": "KITANO",
+  "name": "kitano",
   "productName": "KITANO",
   "version": "0.0.1",
   "description": "Yeet",
@@ -17,7 +17,7 @@
     "name": "yayuyokitano",
     "email": "69117606+yayuyokitano@users.noreply.github.com"
   },
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "config": {
     "forge": {
       "packagerConfig": {},
@@ -25,7 +25,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "my_new_app"
+            "name": "KITANO"
           }
         },
         {

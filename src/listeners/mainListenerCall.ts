@@ -12,12 +12,8 @@ export async function openImport(targetElement:HTMLElement) {
 }
 
 export function closePopup() {
-    document.querySelectorAll(".faded button").forEach( e => {
-        (e as HTMLInputElement).tabIndex = 0;
-        (e as HTMLInputElement).classList.remove("disabledBtn");
-    })
+    enableBackground();
     document.querySelector("#popupDiv").classList.add("hidden");
-    document.querySelector("#backgroundDiv").classList.remove("faded");
 }
 
 function openPopup(targetElement:HTMLElement, settingMap:object):null|string {
@@ -29,11 +25,7 @@ function openPopup(targetElement:HTMLElement, settingMap:object):null|string {
 
     setTimeout(() => {
         document.querySelector("#popupDiv").classList.remove("hidden");
-        document.querySelector("#backgroundDiv").classList.add("faded");
-        document.querySelectorAll(".faded button").forEach( e => {
-            (e as HTMLInputElement).tabIndex = -1;
-            (e as HTMLInputElement).classList.add("disabledBtn");
-        })
+        disableBackground();
     })
 }
 
@@ -43,4 +35,20 @@ export function changeTheme(newTheme:string) {
         (themes as any)[theme].unuse();
     }
     (themes as any)[newTheme].use();
+}
+
+export function disableBackground() {
+    document.querySelector("#backgroundDiv").classList.add("faded");
+    document.querySelectorAll(".faded button").forEach( e => {
+        (e as HTMLInputElement).tabIndex = -1;
+        (e as HTMLInputElement).classList.add("disabledBtn");
+    })
+}
+
+export function enableBackground() {
+    document.querySelectorAll(".faded button").forEach( e => {
+        (e as HTMLInputElement).tabIndex = 0;
+        (e as HTMLInputElement).classList.remove("disabledBtn");
+    })
+    document.querySelector("#backgroundDiv").classList.remove("faded");
 }
