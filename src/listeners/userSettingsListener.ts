@@ -25,4 +25,37 @@ window.addEventListener("keydown", e => {
     if (e.key === "Escape" && document.querySelector(".faded")) {
         popup.closeWeakPopup(".popup:not(.hidden)");
     }
+
+    if (e.key === "Enter" && (e.target as HTMLElement).tabIndex !== -1) {
+        (e.target as HTMLElement).click();
+        setTimeout(() => {
+            if ((e.target as HTMLElement).parentElement.id === "popupSetting"){
+                (document.querySelector('#popupContent .display [tabindex]:not([tabindex="-1"])') as HTMLElement).focus();
+            }
+        })
+    }
+
+    if (e.key === "Tab") {
+        const prevFocus = document.querySelector(":focus");
+        const currTab = document.querySelector(".currLi");
+        setTimeout(() => {
+            const currFocus = document.querySelector(":focus");
+            const settingDiv = document.querySelector("#popupSetting");
+            if (currFocus?.closest("#popupSetting")) {
+                if (prevFocus?.closest("#popupContent")) {
+                    ((currTab.nextElementSibling || settingDiv.firstElementChild) as HTMLElement).focus();
+                } else if (currFocus?.classList?.contains("currLi")) {
+                    (document.querySelector('#popupContent .display [tabindex]:not([tabindex="-1"])') as HTMLElement).focus();
+                }
+            } else if (currFocus?.closest("#popupContent")) {
+                if (prevFocus?.closest("#popupSetting")) {
+                    if (!currTab.previousElementSibling) {
+                        (document.querySelector('#popupContent .display [tabindex]:not([tabindex="-1"])') as HTMLElement).focus();
+                    } else {
+                        (settingDiv.firstElementChild as HTMLElement).focus();
+                    }
+                }
+            }
+        })
+    }
 })

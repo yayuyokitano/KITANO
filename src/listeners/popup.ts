@@ -33,7 +33,7 @@ export function openPopup(popupSelector:string) {
     setTimeout(() => {
         document.querySelector(popupSelector).classList.remove("hidden");
         document.querySelector("#backgroundDiv").classList.add("faded");
-        document.querySelectorAll('.faded *[tabindex="0"], .faded button').forEach( e => {
+        document.querySelectorAll('.faded *:not([tabindex="-1"]), .faded button').forEach( e => {
             (e as HTMLInputElement).tabIndex = -1;
             (e as HTMLInputElement).classList.add("disabledBtn");
         })

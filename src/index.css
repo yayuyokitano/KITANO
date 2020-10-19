@@ -161,6 +161,7 @@ select:focus {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
+  outline: none;
 }
 
 .folderElement span {
@@ -183,9 +184,8 @@ select:focus {
 }
 
 .deckList li:not(.folderElement):hover,
-.deckList li:not(.folderElement):focus-within {
+.deckList li:not(.folderElement):focus {
   background-color: var(--accent-highlight);
-  outline: none;
 }
 
 a {
