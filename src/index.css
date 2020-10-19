@@ -16,6 +16,15 @@ body.preload2 * {
   transition: background-color 200ms, color 200ms !important;
 }
 
+input {
+  font-size: 1em;
+}
+
+input[type="text"] {
+  padding: 0.15rem 0.3rem;
+  margin-bottom: 1.25rem;
+}
+
 #popupDiv {
   position: fixed;
   width: 80vw;
@@ -58,7 +67,7 @@ body.preload2 * {
   padding-left: 1rem;
 }
 
-#popupContent div:not(.display) {
+#popupContent div:not(.display):not(.necessary) {
   display: none;
 }
 
@@ -79,16 +88,40 @@ body.preload2 * {
   transition: 400ms;
 }
 
-#importDeckUpload {
-  position: absolute;
-  margin-left: -1rem;
-  margin-top: -1.2rem;
+.fileUploadWrapper {
   width: 100%;
   height: 100vh;
   border: none;
   outline: none;
   cursor: pointer;
+  margin-left: -1rem;
+  padding-left: 1rem;
+  position: relative;
+  margin-top: -1.3rem;
+  padding-top: 1.3rem;
+}
+
+.fileUploadWrapper svg {
+  width: 96px;
+  height: 96px;
+  transition: width 400ms, height 400ms;
+}
+
+.fileUploadWrapper:hover svg,
+.fileUploadWrapper:focus-within svg {
+  width: 128px;
+  height: 128px;
+  animation: fileUpload 4000ms infinite ease-in-out;
+}
+
+#importDeckUpload {
   opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  cursor: pointer;
 }
 
 .faded {
@@ -313,7 +346,8 @@ svg {
   background-color: var(--secondary-accent-highlight);
 }
 
-.progressVal{
+.progressVal {
+  width: 0;
   height: 2rem;
   background-color: var(--secondary-accent-color);
 }
@@ -343,6 +377,12 @@ svg {
 @keyframes appearFromTop {
   0% {  height: 0; }
   100% { height: 2rem; }
+}
+
+@keyframes fileUpload {
+  0% { margin-top: 0; }
+  50% { margin-top: 2rem; }
+  100% { margin-top: 0; }
 }
 
 @media only screen and (max-width: 650px) {

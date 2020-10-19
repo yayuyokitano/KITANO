@@ -22,7 +22,7 @@ export function popup(settingMap:object) {
   popup.content.innerHTML = "";
   let first = true;
   for (let [setting, content] of Object.entries(settingMap)) {
-    popup.setting.innerHTML += `<li value="${setting}" tabindex="10" ${first ? 'class="currLi"' : ""}>${setting}</li>`;
+    popup.setting.innerHTML += `<li value="${setting}" tabindex="0" ${first ? 'class="currLi"' : ""}>${setting}</li>`;
     popup.content.innerHTML += `<div settingid="${setting}" ${first ? 'class="display"' : ""}>${content}</div>`;
     first = false;
   }
@@ -30,11 +30,11 @@ export function popup(settingMap:object) {
 }
 
 export const settingMap = {
-  Appearance: `<h2>Appearance</h2><label>Theme: <select class="themeSelect" onchange="listeners.changeTheme(this.value); this.blur()" tabindex="10"><option value="light">Light</option><option value="dark">Dark</option></select></label>`
+  Appearance: `<h2>Appearance</h2><label>Theme: <select class="themeSelect" onchange="listeners.changeTheme(this.value); this.blur()" tabindex="0"><option value="light">Light</option><option value="dark">Dark</option></select></label>`
 }
 
 export const newDeck = {
-  "New Deck": "<h2>Create New Deck</h2><label>Deck Name: <input type='text' id='newDeckName' tabindex='5'></label>",
-  "Import Deck": "<input type='file' multiple id='importDeckUpload' onchange='listeners.closePopup(); callbackList.handleFiles(Object.values(this.files))' tabindex='5'><h2>Import Deck</h2><p>To import .ktn deck files, just drag the file(s) and drop them in the window.<br>You can also click this window to look for the file.</p><p>KITANO is also compatible with Anki's .apkg files.<br>Note that exporting to .apkg is currently not doable.</p>",
-  "New Folder": "<h2>Create New Folder</h2><label>Folder Name: <input type='text' id='newDeckName' tabindex='5'></label><br><label>Choose a deck to include in the folder: <select id='folderDeckSelect' tabindex='5'></select></label>"
+  "New Deck": "<h2>Create New Deck</h2><label>Deck Name: <input type='text' id='newDeckName' tabindex='0'></label>",
+  "Import Deck": '<div class="fileUploadWrapper necessary"><input type="file" multiple id="importDeckUpload" onchange="listeners.closePopup(); callbackList.handleFiles(Object.values(this.files))" tabindex="0"><h2>Import Deck</h2><p>To import .ktn deck files, just drag the file(s) and drop them in the window.<br>You can also click this window to look for the file.</p><p>KITANO is also compatible with Anki\'s .apkg files.<br>Note that exporting to .apkg is currently not doable.</p><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="48px" height="48px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg></div>',
+  "New Folder": "<h2>Create New Folder</h2><label>Folder Name: <input type='text' id='newDeckName' tabindex='0'></label><br><label>Choose a deck to include in the folder: <select id='folderDeckSelect' tabindex='0'></select></label>"
 }

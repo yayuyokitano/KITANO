@@ -27,7 +27,9 @@ window.addEventListener("keydown", e => {
     }
 
     if (e.key === "Enter" && (e.target as HTMLElement).tabIndex !== -1) {
-        (e.target as HTMLElement).click();
+        if ((e.target as HTMLElement).tagName !== "INPUT" && (e.target as HTMLElement).tagName !== "BUTTON") {
+            (e.target as HTMLElement).click();
+        }
         setTimeout(() => {
             if ((e.target as HTMLElement).parentElement.id === "popupSetting"){
                 (document.querySelector('#popupContent .display [tabindex]:not([tabindex="-1"])') as HTMLElement).focus();
@@ -41,8 +43,10 @@ window.addEventListener("keydown", e => {
         setTimeout(() => {
             const currFocus = document.querySelector(":focus");
             const settingDiv = document.querySelector("#popupSetting");
+            console.log(currFocus);
+            console.log(prevFocus);
             if (currFocus?.closest("#popupSetting")) {
-                if (prevFocus?.closest("#popupContent")) {
+                if (prevFocus === null || prevFocus.closest("#popupContent") ) {
                     ((currTab.nextElementSibling || settingDiv.firstElementChild) as HTMLElement).focus();
                 } else if (currFocus?.classList?.contains("currLi")) {
                     (document.querySelector('#popupContent .display [tabindex]:not([tabindex="-1"])') as HTMLElement).focus();
