@@ -50,7 +50,7 @@ input[type="text"] {
   cursor: pointer;
   background-color: var(--accent-color);
   color: var(--primary-text);
-  transition: 400ms;
+  transition: 200ms;
   outline: none;
 }
 
@@ -62,7 +62,7 @@ input[type="text"] {
 
 #popupContent {
   background-color: var(--primary-background);
-  transition: 400ms;
+  transition: 200ms;
   flex: 1;
   padding-left: 1rem;
 }
@@ -135,7 +135,11 @@ input[type="text"] {
 .mainPageNav {
   background-color: var(--accent-color);
   display: flex;
-  transition: 400ms;
+  transition: 200ms;
+}
+
+svg {
+  transition: fill 400ms;
 }
 
 button,
@@ -145,7 +149,7 @@ select {
   outline: none;
   background-color: var(--accent-color);
   color: var(--primary-text);
-  transition: 400ms;
+  transition: 200ms;
 }
 
 button:not(.disabledBtn),
@@ -245,8 +249,8 @@ li:focus-within>a>.deckBtnList {
   display: flex;
 }
 
-li:hover .reviewCount,
-li:focus-within .reviewCount {
+li:hover>a>.reviewCount,
+li:focus-within>a>.reviewCount {
   display: none;
 }
 
