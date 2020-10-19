@@ -7,18 +7,6 @@ window.addEventListener("dragover", e => {
     e.stopPropagation();
 })
 
-window.addEventListener("dragenter", () => {
-    document.querySelector(".fileUpload")?.classList.add("is-dragover");
-})
-
-window.addEventListener("dragover", () => {
-    document.querySelector(".fileUpload")?.classList.add("is-dragover");
-})
-
-window.addEventListener("dragleave", () => {
-    document.querySelector(".fileUpload")?.classList.remove("is-dragover");
-})
-
 window.addEventListener("drop", e => {
     droppedFiles = Object.values((e as any).dataTransfer.files);
     handleFiles(droppedFiles);
@@ -53,7 +41,7 @@ export function progressUpdate(progress:any) {
 }
 
 export function endExtract(droppedFiles:any) {
-    (document.querySelector(".progressVal") as HTMLElement).style.width = `0%`;
+    (document.querySelector(".progressVal") as HTMLElement).style.width = "0%";
     if (droppedFiles?.length) {
         iterateExtract(droppedFiles);
     } else {
@@ -63,11 +51,13 @@ export function endExtract(droppedFiles:any) {
 
 export function iterateExtract(droppedFiles:any) {
     const file = droppedFiles.shift();
-    let fileName = file.name.split(".");
-    if (fileName.pop() === "apkg") {
+    let fileName = file?.name.split(".");
+    if (fileName?.pop() === "apkg") {
         (document.querySelector(".currFile") as HTMLElement).innerText = file.name;
         (document.querySelector(".progressVal") as HTMLElement).setAttribute("currMin", "-1");
         request.sendRequest({ fileName: fileName.join("_"), filePath: file.path, fileList: droppedFiles }, "extractDeck", "");
+    } else {
+        endExtract(droppedFiles);
     }
 }
 
