@@ -8,7 +8,7 @@ window.addEventListener("click", e => {
     const currli = (e.target as HTMLElement).closest("#popupSetting li") as HTMLElement;
     const currMenu = currli?.innerText;
 
-    (e.target as HTMLElement).closest("button")?.blur();
+    ((e.target as HTMLElement).closest("button, li:focus") as HTMLElement)?.blur();
     currli?.blur();
     if (currMenu) {
         document.querySelector("#popupContent .display").classList.remove("display");
