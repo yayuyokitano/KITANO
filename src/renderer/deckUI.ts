@@ -52,6 +52,7 @@ export function createDeckEntries (args:any) {
             }
 
             let currli = document.createElement("li");
+            currli.tabIndex = 0;
             currli.classList.add("appearFromTop");
             currli.setAttribute("deckid", deck.id);
             currli.innerHTML = template.deckContent(deckSplit.slice(-1).join(), deck.fileName, deck.id, deck.numberRev, deck.numberNew);

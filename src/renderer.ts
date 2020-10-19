@@ -43,7 +43,7 @@ import * as callbackList from "./renderer/functions";
 });
 
 import "./listeners/userSettingsListener";
-import * as listenerList from "./listeners/mainListenerCall";
+import * as listenerList from "./listeners/popup";
 (window as any).listeners = listenerList;
 
 import "./renderer/initialize";

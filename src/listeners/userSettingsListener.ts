@@ -1,8 +1,8 @@
-import * as listenerList from "./mainListenerCall";
+import * as popup from "./popup";
 
 window.addEventListener("click", e => {
     if ((e.target as HTMLElement).closest(".faded")) {
-        listenerList.closePopup();
+        popup.closeWeakPopup(".popup:not(.hidden)");
     }
     
     const currli = (e.target as HTMLElement).closest("#popupSetting li") as HTMLElement;
@@ -23,6 +23,6 @@ window.addEventListener("click", e => {
 
 window.addEventListener("keydown", e => {
     if (e.key === "Escape" && document.querySelector(".faded")) {
-        listenerList.closePopup();
+        popup.closeWeakPopup(".popup:not(.hidden)");
     }
 })

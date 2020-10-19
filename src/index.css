@@ -182,8 +182,10 @@ select:focus {
   border-bottom: none;
 }
 
-.deckList li:not(.folderElement):hover {
+.deckList li:not(.folderElement):hover,
+.deckList li:not(.folderElement):focus-within {
   background-color: var(--accent-highlight);
+  outline: none;
 }
 
 a {
@@ -201,7 +203,8 @@ a {
   display: none;
 }
 
-li:hover>a>.deckBtnList {
+li:hover>a>.deckBtnList,
+li:focus-within>a>.deckBtnList {
   display: flex;
 }
 
@@ -209,7 +212,8 @@ li:hover>a>.deckBtnList {
   display: flex;
 }
 
-li:hover .reviewCount {
+li:hover .reviewCount,
+li:focus-within .reviewCount {
   display: none;
 }
 
