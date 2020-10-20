@@ -12,7 +12,7 @@ export function openImport(targetElement:HTMLElement) {
 
 export function openDeckEdit(target:any) {
     openMainPopup(target.li, template.editDeckMap(target));
-    //request.sendRequest(target, "getDeckSetting", "setDeckSettingsPopup");
+    request.sendRequest(target, "getDeckSettings", "handleDeckSettings");
 }
 
 function openMainPopup(targetElement:HTMLElement, settingMap:object):null|string {

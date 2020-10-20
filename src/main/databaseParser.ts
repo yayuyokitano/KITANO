@@ -145,8 +145,31 @@ async function removeUnusedMediaFiles(deckPath:string) {
     fs.promises.writeFile(path.join(deckPath, "media"), JSON.stringify(newMedia));
 }
 
-function getDeckSettings(target:any) {
+export async function getDeckSettings (target:any) {
     const db = new sqlite3(path.join(decksPath, target.path, "collection.anki2"));
     const decks = JSON.parse(db.prepare("SELECT decks FROM col").get().decks);
-    return decks[target.id].settings;
+    db.close();
+    return [decks[target.id].settings, await settings.getSetting(["deckSettings"])];
+}
+
+export function modifyDeckSetting (args:any) {
+    const db = new sqlite3(path.join(decksPath, args.path, "collection.anki2"));
+    const res = db.prepare("SELECT decks FROM col").get();
+    let decks = JSON.parse(res.decks);
+    let target = decks[args.id];
+
+    console.log(target);
+
+    for (let i = 0; i < args.navInstruction.length - 1; i++) {
+        target = target[args.navInstruction[i]];
+        console.log(target);
+    }
+    console.log(target);
+    target[args.navInstruction[args.navInstruction.length - 1]] = args.value;
+    console.log(target);
+    console.log(decks);
+
+    db.prepare("UPDATE col SET decks = ?").run(JSON.stringify(decks));
+    db.close();
+    return null;
 }
