@@ -1,4 +1,4 @@
-import * as popup from "../listeners/popup";
+import * as popup from "./popup";
 
 export async function ask(question:string) {
 

@@ -6,7 +6,7 @@ import * as path from "path";
 import * as database from "../main/databaseParser";
 import { promises as fs } from "fs";
 
-const path7za = sevenBin.path7za;
+const path7za = sevenBin.path7za; //required for webpack
 const pathTo7zip = path.join(__dirname, "native_modules", `7za${(process.platform === "win32") ? ".exe" : ""}`);
 
 export async function extractDeck(args:any):Promise<any> {

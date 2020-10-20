@@ -1,4 +1,4 @@
-import * as popup from "./popup";
+import * as popup from "../popupWindows/popup";
 
 window.addEventListener("click", e => {
     if ((e.target as HTMLElement).closest(".faded")) {
@@ -17,8 +17,6 @@ window.addEventListener("click", e => {
         document.querySelector("#popupSetting .currLi").classList.remove("currLi");
         document.querySelector(`#popupSetting li[value="${currMenu}"]`).classList.add("currLi");
     }
-
-
 })
 
 window.addEventListener("keydown", e => {
