@@ -14,14 +14,26 @@ export function getDeckData(deck:string) {
         //console.log(note.flds.split("\u001f"));
     }*/
 
-    let { usedDecks, decks } = getDecks(db);
-    db.close();
+    let { usedDecks, decks, dconf } = getDecks(db);
 
     let returnData = [];
-    
-    for (let usedDeck of usedDecks) {
-        returnData.push({ name: decks[usedDeck].name, fileName: deck, id: decks[usedDeck].id, numberNew: 10, numberRev: 0});
+
+    if (dconf === "KITANO") {
+        //handle as KITANO deck
+        for (let usedDeck of usedDecks) {
+            returnData.push({ name: decks[usedDeck].name, fileName: deck, id: decks[usedDeck].id, numberNew: decks[usedDeck].newPerDay, numberRev: 0});
+        }
+    } else {
+        //migrate from anki format
+        dconf = Object.values(dconf)[0];
+        for (let usedDeck of usedDecks) {
+            decks[usedDeck].newPerDay = dconf.new.perDay;
+            decks[usedDeck].revPerDay = dconf.rev.perDay;
+            returnData.push({ name: decks[usedDeck].name, fileName: deck, id: decks[usedDeck].id, numberNew: decks[usedDeck].newPerDay, numberRev: 0});
+        }
+        db.prepare("UPDATE col SET decks = ?, dconf = ?").run(JSON.stringify(decks), JSON.stringify("KITANO"));
     }
+    db.close();
 
     main.sendData(returnData, "createDeckEntries");
 }
@@ -97,11 +109,12 @@ function getDecks(db:any) {
     }
     usedDecks = Array.from(usedDecks);
 
-    const col = db.prepare("SELECT decks, models FROM col").get();
+    const col = db.prepare("SELECT decks, models, dconf FROM col").get();
     return {
         usedDecks,
         decks: JSON.parse(col.decks),
-        models: JSON.parse(col.models)
+        models: JSON.parse(col.models),
+        dconf: JSON.parse(col.dconf)
     }
 }
 
