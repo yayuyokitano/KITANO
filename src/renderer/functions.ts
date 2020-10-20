@@ -1,5 +1,5 @@
 /// getSetting, setSettings, createSettings, settingsExist
-export * from "./userSettingsRender";
+export * from "../popupWindows/userSettingsRender";
 export * from "./initialize";
-export * from "../listeners/deckManagement";
+export * from "../listeners/deckExtraction";
 export * from "./DeckUI";

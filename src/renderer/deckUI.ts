@@ -1,7 +1,7 @@
 import * as template from "../helpers/template";
-import * as confirmation from "./confirmation";
+import * as confirmation from "../popupWindows/confirmation";
 import * as request from "../helpers/request";
-import * as popup from "../listeners/popup";
+import * as popup from "../popupWindows/popup";
 
 export function createDeckEntries (args:any) {
     for (let deck of args) {

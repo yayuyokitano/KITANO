@@ -42,9 +42,9 @@ import * as callbackList from "./renderer/functions";
     }
 });
 
-import "./listeners/userSettingsListener";
-import * as listeners from "./window/functions";
+import "./listeners/keyboardAndMouse";
+import * as listeners from "./popupWindows/functions";
 (window as any).listeners = listeners;
 
 import "./renderer/initialize";
-import "./listeners/deckManagement";
+import "./listeners/deckExtraction";
