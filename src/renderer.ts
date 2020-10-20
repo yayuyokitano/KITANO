@@ -43,8 +43,8 @@ import * as callbackList from "./renderer/functions";
 });
 
 import "./listeners/userSettingsListener";
-import * as listenerList from "./listeners/popup";
-(window as any).listeners = listenerList;
+import * as listeners from "./window/functions";
+(window as any).listeners = listeners;
 
 import "./renderer/initialize";
 import "./listeners/deckManagement";
