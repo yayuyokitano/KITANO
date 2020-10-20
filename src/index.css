@@ -2,8 +2,6 @@
   font-size: 18px;
 }
 
-
-
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   margin: 0;
@@ -25,6 +23,10 @@ input[type="text"] {
   margin-bottom: 1.25rem;
 }
 
+.popup {
+  transition: opacity 200ms;
+}
+
 #popupDiv {
   position: fixed;
   width: 80vw;
@@ -33,7 +35,6 @@ input[type="text"] {
   left: 10vw;
   box-sizing: border-box;
   overflow: hidden;
-  transition: opacity 200ms;
   display: flex;
 }
 
@@ -246,13 +247,13 @@ li:focus-within>a>.deckBtnList {
   display: flex;
 }
 
-.reviewCount {
-  display: flex;
-}
-
 li:hover>a>.reviewCount,
 li:focus-within>a>.reviewCount {
   display: none;
+}
+
+.reviewCount {
+  display: flex;
 }
 
 .reviewCount span {
@@ -333,7 +334,6 @@ svg {
   transform: translateY(-50%);
   padding: 1rem 2rem;
   box-shadow: 0 0 5px var(--accent-color);
-  transition: opacity 200ms;
 }
 
 #uploadProgressDiv p {
@@ -379,25 +379,24 @@ input[type="checkbox"]:checked + label::before {
 label {
   overflow: hidden;
   display: inline-block;
-  transition: height 400ms;
+  transition: height 400ms, transform 600ms;
 }
 
-.hider + label + br + label {
+.hider + label {
+  display: block;
+  padding-left: 24px;
+  cursor: pointer;
+}
+
+.hider + label + label {
+  margin-top: 0.5rem;
   height: 2rem;
-  position: absolute;
+  transform: translateY(0);
 }
 
-.hider + label + br + label + br + * {
-  margin-top: 2rem;
-  transition: margin-top 400ms;
-}
-
-.hider:checked + label + br + label + br + * {
-  margin-top: 0;
-}
-
-.hider:checked + label + br + label {
+.hider:checked + label + label {
   height: 0;
+  transform: translateY(-0.7rem);
 }
 
 input[type="number"] {
@@ -438,9 +437,9 @@ input[type="number"] {
 }
 
 @keyframes fileUpload {
-  0% { margin-top: 0; }
-  50% { margin-top: 2rem; }
-  100% { margin-top: 0; }
+  0% { transform: translateY(0) }
+  50% { transform: translateY(2rem) }
+  100% { transform: translateY(0) }
 }
 
 @media only screen and (max-width: 650px) {

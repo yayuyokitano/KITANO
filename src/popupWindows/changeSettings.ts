@@ -2,7 +2,7 @@ import * as themes from "../themes/themes";
 import * as request from "../helpers/request";
 
 export function changeTheme(newTheme:string) {
-    request.sendRequest({ navInstruction: ["appearance", "theme"], val: newTheme }, "modifySetting", "null");
+    simpleSettingChange(["appearance", "theme"], newTheme);
     for (let theme of Object.keys(themes)) {
         (themes as any)[theme].unuse();
     }

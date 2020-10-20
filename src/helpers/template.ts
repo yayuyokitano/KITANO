@@ -31,12 +31,12 @@ export function popup(settingMap:object) {
 
 export const settingMap = {
   Appearance: '<h2>Appearance</h2><label>Theme: <select class="themeSelect" onchange="listeners.changeTheme(this.value); this.blur()" tabindex="0"><option value="light">Light</option><option value="dark">Dark</option></select></label>',
-  "Deck Settings": `<h2>Deck Settings</h2><label>Default number of new cards per day: <input type="number" id="defaultNewCards" onchange="listeners.simpleSettingChange(['deckSettings', 'newCards'], parseInt(this.value))"></label><br><label>Default max cards per day: <input type="number" id="defaultMaxCards" onchange="listeners.simpleSettingChange(['deckSettings', 'maxCards'], parseInt(this.value))"></label>`
+  "Deck Settings": `<h2>Deck Settings</h2><label>Default number of new cards per day: <input type="number" id="defaultNewCards" onchange="listeners.setPopupChange(this); listeners.simpleSettingChange(['deckSettings', 'newCards'], parseInt(this.value))"></label><br><label>Default max cards per day: <input type="number" id="defaultMaxCards" onchange="listeners.setPopupChange(this); listeners.simpleSettingChange(['deckSettings', 'maxCards'], parseInt(this.value))"></label>`
 }
 
 export function editDeckMap (target:any) {
   return {
-    Main: `<h2>${target.name}</h2><label>Deck name: <input type="text" id="deckEditNameInput" value="${target.name}"></label><br><input id="useDefaultNewCards" type="checkbox" class="hider"><label for="useDefaultNewCards"> Use default number of new cards per day</label><br><label>New cards per day: <input type="text" id="newCardsPerDay"></label><br><input id="useDefaultMaxCards" type="checkbox" class="hider"><label for="useDefaultMaxCards"> Use default max number of cards per day</label><br><label>Max number of cards per day: <input type="text" id="newCardsPerDay"></label>`
+    Main: `<h2>${target.name}</h2><label>Deck name: <input type="text" id="deckEditNameInput" value="${target.name}"></label><br><input id="useDefaultNewCards" type="checkbox" onchange="listeners.setPopupChange(this)" class="hider"><label for="useDefaultNewCards"> Use default number of new cards per day</label><label>New cards per day: <input type="number" id="newCardsPerDay" onchange="listeners.setPopupChange(this)"></label><br><input id="useDefaultMaxCards" type="checkbox" class="hider" onchange="listeners.setPopupChange(this)"><label for="useDefaultMaxCards"> Use default max number of cards per day</label><label>Max number of cards per day: <input type="number" id="maxCardsPerDay" onchange="listeners.setPopupChange(this)"></label>`
   }
 }
 

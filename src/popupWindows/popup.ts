@@ -37,6 +37,16 @@ export function openPopup(popupSelector:string) {
 }
 
 export function closePopup(popupSelector:string) {
+
+    console.log(document.querySelector(popupSelector));
+    console.log((document.querySelector(popupSelector)?.getAttribute("changed")));
+
+    if (document.querySelector(popupSelector)?.getAttribute("changed")) {
+        document.querySelector(".deckList").innerHTML = "";
+        request.sendRequest([], "getAllDecks", "");
+        document.querySelector(popupSelector).setAttribute("changed", "0");
+    }
+
     document.querySelector(popupSelector).classList.add("hidden");
     document.querySelectorAll('.faded *[tabindex="-1"], .faded button').forEach( e => {
         (e as HTMLInputElement).tabIndex = 0;
@@ -49,4 +59,8 @@ export function closeWeakPopup(popupSelector:string) {
     if (document.querySelector(popupSelector).getAttribute("isweak")) {
         closePopup(popupSelector);
     }
+}
+
+export function setPopupChange(currElement:HTMLElement) {
+    currElement.closest(".popup").setAttribute("changed", "1");
 }

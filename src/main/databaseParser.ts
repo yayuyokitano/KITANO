@@ -3,11 +3,12 @@ import * as path from "path";
 import { app } from "electron";
 import * as main from "../index";
 import * as fs from "fs";
+import * as settings from "./userSettingsMain";
 
 const decksPath = path.join(app.getPath("userData"), "decks");
 fs.promises.mkdir(decksPath);
 
-export function getDeckData(deck:string) {
+export async function getDeckData(deck:string) {
     const db = new sqlite3(path.join(decksPath, deck, "collection.anki2"));
     //const notes = db.prepare("SELECT * FROM notes").all();
     /*for (let note of notes) {
@@ -21,15 +22,16 @@ export function getDeckData(deck:string) {
     if (dconf === "KITANO") {
         //handle as KITANO deck
         for (let usedDeck of usedDecks) {
-            returnData.push({ name: decks[usedDeck].name, fileName: deck, id: decks[usedDeck].id, numberNew: decks[usedDeck].newPerDay, numberRev: 0});
+            const numberNew = getValueOrDefault(decks[usedDeck].settings.newPerDay, await settings.getSetting(["deckSettings", "newCards"]));
+            returnData.push({ name: decks[usedDeck].name, fileName: deck, id: decks[usedDeck].id, numberNew, numberRev: 0});
         }
     } else {
         //migrate from anki format
-        dconf = Object.values(dconf)[0];
         for (let usedDeck of usedDecks) {
-            decks[usedDeck].newPerDay = dconf.new.perDay;
-            decks[usedDeck].revPerDay = dconf.rev.perDay;
-            returnData.push({ name: decks[usedDeck].name, fileName: deck, id: decks[usedDeck].id, numberNew: decks[usedDeck].newPerDay, numberRev: 0});
+            decks[usedDeck].settings = {};
+            decks[usedDeck].settings.newPerDay = -1;
+            decks[usedDeck].settings.revPerDay = -1;
+            returnData.push({ name: decks[usedDeck].name, fileName: deck, id: decks[usedDeck].id, numberNew: await settings.getSetting(["deckSettings", "newCards"]), numberRev: 0});
         }
         db.prepare("UPDATE col SET decks = ?, dconf = ?").run(JSON.stringify(decks), JSON.stringify("KITANO"));
     }
@@ -46,6 +48,10 @@ export async function getAllDecks(args:any):Promise<null> {
     }
 
     return null;
+}
+
+function getValueOrDefault (val:any, def:any) {
+    return ((val !== -1) ? val : def);
 }
 
 export function deleteDeck(args: any):null {
@@ -137,4 +143,10 @@ async function removeUnusedMediaFiles(deckPath:string) {
     }
     
     fs.promises.writeFile(path.join(deckPath, "media"), JSON.stringify(newMedia));
+}
+
+function getDeckSettings(target:any) {
+    const db = new sqlite3(path.join(decksPath, target.path, "collection.anki2"));
+    const decks = JSON.parse(db.prepare("SELECT decks FROM col").get().decks);
+    return decks[target.id].settings;
 }
