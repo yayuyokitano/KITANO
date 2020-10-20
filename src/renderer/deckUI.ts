@@ -1,6 +1,7 @@
 import * as template from "../helpers/template";
 import * as confirmation from "./confirmation";
 import * as request from "../helpers/request";
+import * as popup from "../listeners/popup";
 
 export function createDeckEntries (args:any) {
     for (let deck of args) {
@@ -61,24 +62,36 @@ export function createDeckEntries (args:any) {
     }
 }
 
-export async function deleteDeck(targetElement:HTMLElement) {
-    const currli = targetElement.closest("li");
-    const target = {
-        path: targetElement.closest(".gotoDeck").getAttribute("deckfile"),
-        name: (targetElement.closest(".gotoDeck").querySelector(".deckLabel") as HTMLElement).innerText,
-        id: currli.getAttribute("deckid")
-    }
+export async function deleteDeck (targetElement:HTMLElement) {
+    const target = getDeckFromElement(targetElement);
+
     if (await confirmation.ask(`Do you want to delete ${target.name}?`)) {
         request.sendRequest(target, "deleteDeck", "");
-        const shuli = getParentLi(currli);
+        const shuli = getParentLi(target.li);
         shuli.parentElement.removeChild(shuli);
     }
 }
 
-function getParentLi(currli:HTMLElement):HTMLElement {
+export async function editDeck (targetElement:HTMLElement) {
+    const target = getDeckFromElement(targetElement);
+
+    popup.openDeckEdit(target);
+}
+
+function getParentLi (currli:HTMLElement):HTMLElement {
     const shuli = currli.parentElement;
     if (((shuli.tagName === "LI" || (shuli.tagName === "UL" && !shuli.classList.contains("deckList"))) && shuli.childElementCount === 1) || shuli.classList.contains("folderElement")) {
         return getParentLi(shuli);
     }
     return currli;
+}
+
+function getDeckFromElement (targetElement:HTMLElement) {
+    const currli = targetElement.closest("li");
+    return {
+        path: targetElement.closest(".gotoDeck").getAttribute("deckfile"),
+        name: (targetElement.closest(".gotoDeck").querySelector(".deckLabel") as HTMLElement).innerText,
+        id: currli.getAttribute("deckid"),
+        li: currli
+    }
 }

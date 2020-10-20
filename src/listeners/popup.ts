@@ -2,13 +2,18 @@ import * as request from "../helpers/request";
 import * as themes from "../themes/themes";
 import * as template from "../helpers/template";
 
-export async function openSettings(targetElement:HTMLElement) {
+export function openSettings(targetElement:HTMLElement) {
     openMainPopup(targetElement, template.settingMap);
     request.sendRequest([], "getSetting", "setSettingsPopup");
 }
 
-export async function openImport(targetElement:HTMLElement) {
+export function openImport(targetElement:HTMLElement) {
     openMainPopup(targetElement, template.newDeck);
+}
+
+export function openDeckEdit(target:any) {
+    openMainPopup(target.li, template.editDeckMap(target));
+    //request.sendRequest(target, "getDeckSetting", "setDeckSettingsPopup");
 }
 
 function openMainPopup(targetElement:HTMLElement, settingMap:object):null|string {
@@ -27,6 +32,10 @@ export function changeTheme(newTheme:string) {
         (themes as any)[theme].unuse();
     }
     (themes as any)[newTheme].use();
+}
+
+export function simpleSettingChange(property:string[], value:any) {
+    request.sendRequest({ navInstruction: property, val: value }, "modifySetting", "null");
 }
 
 export function openPopup(popupSelector:string) {

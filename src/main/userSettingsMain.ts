@@ -4,6 +4,16 @@ import * as path from "path";
 
 const configPath = path.join(app.getPath("userData"), "config.json");
 
+const defaultSettings = {
+    appearance: {
+        theme: "light"
+    },
+    deckSettings: {
+        newCards: 10,
+        maxCards: 200
+    }
+}
+
 export async function getSetting(navInstruction: string[]) {
     const configStatus = await settingsExist("");
     if (typeof configStatus === "string") {
@@ -16,6 +26,27 @@ export async function getSetting(navInstruction: string[]) {
     let fileContent = JSON.parse(
         (await fs.readFile(configPath)).toString()
     );
+
+    let settingsChanged = false;
+    for (let [key, value] of Object.entries(defaultSettings)) {
+        if (fileContent.hasOwnProperty(key)) {
+            if (typeof fileContent[key] === "object") {
+                for (let [key2, value2] of Object.entries(defaultSettings[key])) {
+                    if (!fileContent[key].hasOwnProperty(key2)) {
+                        fileContent[key][key2] = value2;
+                        settingsChanged = true;
+                    }
+                }
+            }
+        } else {
+            fileContent[key] = value;
+            settingsChanged = true;
+        }
+    }
+    if (settingsChanged) {
+        fs.writeFile(configPath, JSON.stringify(fileContent));
+    }
+    
     for (let property of navInstruction) {
         fileContent = fileContent[property];
     }
@@ -30,11 +61,7 @@ export async function setSettings(settings: any) {
 
 export async function createSettings(unused:any):Promise<null> {
 
-    const defaultSettings = {
-        appearance: {
-            theme: "light"
-        }
-    }
+    
 
     await setSettings(defaultSettings);
     return null;

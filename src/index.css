@@ -65,6 +65,7 @@ input[type="text"] {
   transition: 200ms;
   flex: 1;
   padding-left: 1rem;
+  position: relative;
 }
 
 #popupContent div:not(.display):not(.necessary) {
@@ -348,6 +349,59 @@ svg {
   width: 100%;
   margin: 0 auto;
   background-color: var(--secondary-accent-highlight);
+}
+
+input[type="checkbox"] {
+  visibility: hidden;
+}
+
+input[type="checkbox"] + label::before {
+  border-radius: 0;
+  background-color: var(--primary-background);
+  width: 13px;
+  height: 16px;
+  border: 1px solid var(--primary-text);
+  position: absolute;
+  content: "";
+  left: 1rem;
+  transform: translateY(3px);
+  padding-left: 3px;
+  vertical-align: middle;
+}
+
+input[type="checkbox"]:checked + label::before {
+  background-color: var(--accent-color);
+  content: "✓";
+  font-size: 0.7rem;
+  line-height: 1rem;
+}
+
+label {
+  overflow: hidden;
+  display: inline-block;
+  transition: height 400ms;
+}
+
+.hider + label + br + label {
+  height: 2rem;
+  position: absolute;
+}
+
+.hider + label + br + label + br + * {
+  margin-top: 2rem;
+  transition: margin-top 400ms;
+}
+
+.hider:checked + label + br + label + br + * {
+  margin-top: 0;
+}
+
+.hider:checked + label + br + label {
+  height: 0;
+}
+
+input[type="number"] {
+  width: 3rem;
 }
 
 .progressVal {
