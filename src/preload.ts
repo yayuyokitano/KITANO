@@ -5,7 +5,7 @@ contextBridge.exposeInMainWorld("mainApi", {
     data,
   }),
   onResponse: (fn:any) => {
-    // Deliberately strip event as it includes `sender` 
+    // Deliberately strip event as it includes `sender`
     ipcRenderer.on('response', (event, ...args) => fn(...args));
   }
 })

@@ -81,25 +81,15 @@ export function deleteDeck(args: any):null {
         let remainingModels = db.prepare("SELECT DISTINCT mid FROM notes").all();
         remainingModels = remainingModels.map(e => e.mid);
         
-        let newModels = {};
-        for (let [key, value] of Object.entries(models)) {
-            if(remainingModels.includes((value as any).id)) {
-                newModels[key] = value;
-            }
-        }
+        const newModels =   Object.fromEntries(Object.entries(models)
+                            .filter(e => remainingModels.includes((e[1] as any).id)));
 
-        let newDecks = {};
-        for (let [key, value] of Object.entries(decks as object)) {
-            if (value.id !== args.id) {
-                newDecks[key] = value;
-            }
-        }
+        const newDecks =    Object.fromEntries(Object.entries(decks)
+                            .filter(e => (e[1] as any).id !== args.id));
 
         db.prepare("UPDATE col SET decks = ?, models = ?").run(JSON.stringify(newDecks), JSON.stringify(newModels));
         db.prepare("VACUUM").run();
         db.close();
-
-        //let worker = new Worker("removeUnusedMediaFiles");
 
         removeUnusedMediaFiles(path.join(decksPath, args.path));
     }
@@ -109,11 +99,7 @@ export function deleteDeck(args: any):null {
 function getDecks(db:any) {
     const cards = db.prepare("SELECT did FROM cards").all();
 
-    let usedDecks:any = new Set();
-    for (let card of cards) {
-        usedDecks.add(card.did);
-    }
-    usedDecks = Array.from(usedDecks);
+    const usedDecks = getUniqueEntries(cards, "did");
 
     const col = db.prepare("SELECT decks, models, dconf FROM col").get();
     return {
@@ -158,18 +144,39 @@ export function modifyDeckSetting (args:any) {
     let decks = JSON.parse(res.decks);
     let target = decks[args.id];
 
-    console.log(target);
-
     for (let i = 0; i < args.navInstruction.length - 1; i++) {
         target = target[args.navInstruction[i]];
-        console.log(target);
     }
-    console.log(target);
     target[args.navInstruction[args.navInstruction.length - 1]] = args.value;
-    console.log(target);
-    console.log(decks);
 
     db.prepare("UPDATE col SET decks = ?").run(JSON.stringify(decks));
     db.close();
     return null;
+}
+
+export function getDeckContent (args:any) {
+    const db = new sqlite3(path.join(decksPath, args.path, "collection.anki2"));
+    const cards = db.prepare("SELECT * FROM cards WHERE did = ?").all(args.id);
+
+    const noteIDList = getUniqueEntries(cards, "nid");
+    const notes = db.prepare(`SELECT * FROM notes WHERE id IN (?${",?".repeat(noteIDList.length - 1)})`).all(...noteIDList);
+
+    let sortedNotes = {}
+    for (let note of notes) {
+        sortedNotes[note.id] = note;
+    }
+    
+    const usedModelIDs = getUniqueEntries(notes, "mid");
+    const models =  Object.fromEntries(Object.entries(JSON.parse(db.prepare("SELECT models FROM col").get().models))
+                    .filter(e => usedModelIDs.includes(parseInt(e[0]))));
+
+    return { cards, sortedNotes , models };
+}
+
+function getUniqueEntries(objectArray:object[], property:string):any {
+    let x:any = new Set();
+    for (let entry of objectArray) {
+        x.add(entry[property]);
+    }
+    return Array.from(x);
 }

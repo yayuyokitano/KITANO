@@ -74,12 +74,20 @@ export async function deleteDeck (targetElement:HTMLElement) {
     }
 }
 
-export async function editDeck (targetElement:HTMLElement) {
+export function editDeck (targetElement:HTMLElement) {
     const target = getDeckFromElement(targetElement);
     
-    request.sendRequest({ path: target.path, id: target.id }, "getDeckSettings", "handleDeckSettings");
+    request.sendRequest({ path: target.path, id: target.id }, "getDeckSettings", "prepareDeckEdit");
 
     popup.openDeckEdit(target);
+}
+
+export function editCards (targetElement:HTMLElement) {
+    const target = getDeckFromElement(targetElement);
+
+    request.sendRequest({ path: target.path, id: target.id }, "getDeckContent", "prepareCardEdit");
+    console.time("start");
+    popup.openCardEdit(target);
 }
 
 function getParentLi (currli:HTMLElement):HTMLElement {

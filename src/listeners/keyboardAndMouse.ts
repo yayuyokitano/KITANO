@@ -20,8 +20,13 @@ window.addEventListener("click", e => {
 })
 
 window.addEventListener("keydown", e => {
-    if (e.key === "Escape" && document.querySelector(".faded")) {
-        popup.closeWeakPopup(".popup:not(.hidden)");
+    if (e.key === "Escape") {
+        if (document.querySelector(".faded")) {
+            popup.closeWeakPopup(".popup:not(.hidden)");
+        } else if (document.querySelector("#strongPopup")) {
+            popup.closeStrongPopup();
+        }
+        
     }
 
     if (e.key === "Enter" && (e.target as HTMLElement).tabIndex !== -1) {

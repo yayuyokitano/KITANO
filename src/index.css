@@ -79,7 +79,7 @@ input[type="text"] {
   text-align: center;
 }
 
-.hidden {
+.hidden:not(#strongPopup) {
   visibility: hidden;
   opacity: 0;
 }
@@ -392,6 +392,29 @@ label {
   margin-top: 0.5rem;
   height: 2rem;
   transform: translateY(0);
+}
+
+#strongPopup {
+  background-color: var(--primary-background);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: left 200ms ease-in-out;
+  overflow-y: scroll;
+}
+
+#strongPopup table {
+  width: 100%;
+}
+
+#strongPopup td {
+  min-width: 5rem;
+}
+
+#strongPopup.hidden {
+  left: -100vw;
 }
 
 .hider:checked + label + label {

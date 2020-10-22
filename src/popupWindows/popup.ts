@@ -12,10 +12,22 @@ export function openImport(targetElement:HTMLElement) {
 
 export function openDeckEdit(target:any) {
     openMainPopup(target.li, template.editDeckMap(target));
-    request.sendRequest(target, "getDeckSettings", "handleDeckSettings");
 }
 
-function openMainPopup(targetElement:HTMLElement, settingMap:object):null|string {
+export function openCardEdit(target:any) {
+    openStrongPopup(target.li, template.editCardMap(target));
+}
+
+function openStrongPopup(targetElement:HTMLElement, settingMap:object) {
+    document.querySelector("#strongPopup").classList.remove("hidden");
+}
+
+export function closeStrongPopup() {
+    document.querySelector("#strongPopup").innerHTML = "";
+    document.querySelector("#strongPopup").classList.add("hidden");
+}
+
+function openMainPopup(targetElement:HTMLElement, settingMap:object) {
     if (targetElement.closest(".faded")) {
         return null;
     }
