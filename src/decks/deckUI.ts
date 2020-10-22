@@ -86,8 +86,8 @@ export function editCards (targetElement:HTMLElement) {
     const target = getDeckFromElement(targetElement);
 
     request.sendRequest({ path: target.path, id: target.id }, "getDeckContent", "prepareCardEdit");
-    console.time("start");
     popup.openCardEdit(target);
+    document.querySelector("#strongPopup").innerHTML = template.deckEditor;
 }
 
 function getParentLi (currli:HTMLElement):HTMLElement {

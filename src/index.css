@@ -38,7 +38,8 @@ input[type="text"] {
   display: flex;
 }
 
-#popupSetting {
+#popupSetting,
+#editorSidebar {
   list-style-type: none;
   margin: 0;
   padding-left: 0;
@@ -46,7 +47,8 @@ input[type="text"] {
   transition: 400ms;
 }
 
-#popupSetting li {
+#popupSetting li,
+#editorSidebar li {
   padding: 0.5rem 1rem;
   cursor: pointer;
   background-color: var(--accent-color);
@@ -57,19 +59,27 @@ input[type="text"] {
 
 #popupSetting li:hover,
 #popupSetting li:focus,
-#popupSetting .currLi {
+#popupSetting .currLi,
+#editorSidebar li:hover,
+#editorSidebar li:focus,
+#editorSidebar .currLi {
   background-color: var(--accent-highlight);
 }
 
-#popupContent {
+#popupContent,
+#editorContent {
   background-color: var(--primary-background);
   transition: 200ms;
   flex: 1;
   padding-left: 1rem;
+}
+
+#popupContent {
   position: relative;
 }
 
-#popupContent div:not(.display):not(.necessary) {
+#popupContent div:not(.display):not(.necessary),
+#editorContent tr.hiddenRow {
   display: none;
 }
 
@@ -402,7 +412,8 @@ label {
   top: 0;
   left: 0;
   transition: left 200ms ease-in-out;
-  overflow-y: scroll;
+  overflow-y: auto;
+  display: flex;
 }
 
 #strongPopup table {
@@ -415,6 +426,37 @@ label {
 
 #strongPopup.hidden {
   left: -100vw;
+}
+
+#editorSearch {
+  background-color: var(--accent-highlight);
+  margin-left: -1rem;
+  padding: 1rem;
+  height: calc(1.6rem + 2px);
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+#editorSidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  z-index: 10;
+}
+
+#editorDisplay {
+  padding-top: 4rem;
+  min-width: 50%;
+}
+
+#editorDisplay th {
+  text-align: left;
+}
+
+#editorSearch input {
+  margin-bottom: 0;
 }
 
 .hider:checked + label + label {

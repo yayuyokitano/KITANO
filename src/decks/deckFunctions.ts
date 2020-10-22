@@ -45,8 +45,24 @@ export function prepareCardEdit (deckData:any) {
     for (let card of deckData.cards) {
         table += template.deckTableRow(card, deckData.sortedNotes[card.nid], deckData.models);
     }
-    document.querySelector("#strongPopup").innerHTML = table + "</table>";
-    console.timeEnd("start");
+    //document.querySelector("#strongPopup").innerHTML = table + "</table>";
+}
+
+export function prepareNoteEdit(args:any) {
+    const sidebar = document.querySelector("#editorSidebar") as HTMLElement;
+    sidebar.innerHTML += "<li>Notes</li>";
+
+    const content = document.querySelector("#editorContent") as HTMLElement;
+    content.style.marginLeft = `${sidebar.offsetWidth}px`;
+
+    let table = "<table><th>Sort Field</th><th>Note Type</th><th>tags</th>";
+    for (let note of args.notes) {
+        table += `<tr><td>${note.sfld}</td><td>${args.models[note.mid].name}</td><td>${note.tags.trim()}</td></tr>`;
+    }
+    table += "</table>";
+
+    const display = document.querySelector("#editorDisplay") as HTMLElement;
+    display.innerHTML += `<div settingid="Notes" class="display">${table}</div>`;
 }
 
 export function prepareCard (deckData:any) {

@@ -160,6 +160,9 @@ export function getDeckContent (args:any) {
 
     const noteIDList = getUniqueEntries(cards, "nid");
     const notes = db.prepare(`SELECT * FROM notes WHERE id IN (?${",?".repeat(noteIDList.length - 1)})`).all(...noteIDList);
+    let models = JSON.parse(db.prepare("SELECT models FROM col").get().models);
+
+    main.sendData({ notes, models }, "prepareNoteEdit");
 
     let sortedNotes = {}
     for (let note of notes) {
@@ -167,8 +170,8 @@ export function getDeckContent (args:any) {
     }
     
     const usedModelIDs = getUniqueEntries(notes, "mid");
-    const models =  Object.fromEntries(Object.entries(JSON.parse(db.prepare("SELECT models FROM col").get().models))
-                    .filter(e => usedModelIDs.includes(parseInt(e[0]))));
+    models =    Object.fromEntries(Object.entries(models)
+                .filter(e => usedModelIDs.includes(parseInt(e[0]))));
 
     return { cards, sortedNotes , models };
 }

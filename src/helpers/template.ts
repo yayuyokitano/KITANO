@@ -56,3 +56,5 @@ export const newDeck = {
 export function deckTableRow (card:any, note:any, models:any) {
   return `<tr><td>${note.sfld}</td><td>${card.due}</td><td>${models[note.mid].tmpls[card.ord].name}</td></tr>`;
 }
+
+export const deckEditor = "<ul id='editorSidebar'></ul><div id='editorContent'><div id='editorSearch'><label>Search: <input type='text' oninput='listeners.editorSearch(this.value)'></label></div><div id='editorDisplay'></div></div>";
