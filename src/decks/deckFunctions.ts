@@ -1,7 +1,7 @@
 import * as request from "../helpers/request";
 import * as typeHandler from "./typeHandler";
 //import { comfortable } from "../plugin/comfortablejs/comfortable";
-const comfortable = require("../plugin/comfortablejs/comfortable.js");
+const comfortable = require("../dependencies/comfortablejs/comfortable.js");
 
 export function prepareDeckEdit (settingList:any) {
     const settings = settingList[0];
