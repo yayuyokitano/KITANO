@@ -419,21 +419,6 @@ label {
   display: flex;
 }
 
-#strongPopup table {
-  margin-left: 1rem;
-  min-width: 100%;
-  box-sizing: border-box;
-  padding-left: 0.5rem;
-}
-
-#strongPopup td {
-  min-width: 5rem;
-  max-width: 60vw;
-  overflow: hidden;
-  background-color: var(--accent-highlight);
-  padding: 0.25rem 0.4rem;
-}
-
 #strongPopup.hidden {
   left: -100vw;
 }
@@ -455,30 +440,10 @@ label {
   z-index: 10;
 }
 
-#editorDisplay table {
-  display: block;
-  max-width: fit-content;
-  margin: 0 auto;
-  overflow-x: auto;
-  white-space: nowrap;
-}
-
 #editorDisplay {
-  padding-top: 5.5rem;
+  padding-top: 4rem;
   min-width: 50%;
   overflow: auto;
-}
-
-#editorDisplay th {
-  text-align: left;
-  padding: 0;
-}
-
-#editorDisplay thead {
-  position: fixed;
-  top: 3.7rem;
-  background-color: var(--primary-background);
-  padding: 0.3rem 0;
 }
 
 #editorSearch input {

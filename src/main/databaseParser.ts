@@ -157,11 +157,23 @@ export function modifyDeckSetting (args:any) {
 export function getDeckContent (args:any) {
     console.time("start");
     const db = new sqlite3(path.join(decksPath, args.path, "collection.anki2"));
-    const cards = db.prepare("SELECT nid FROM cards WHERE did = ?").all(args.id);
-    console.timeLog("start");
+    const numDeck = Object.values(db.prepare("SELECT COUNT ( DISTINCT nid ) FROM cards WHERE did = ?").get(args.id))[0] as number;
+    const numTotal = Object.values(db.prepare("SELECT COUNT ( DISTINCT nid ) FROM cards").get())[0] as number;
 
-    const noteIDList = getUniqueEntries(cards, "nid");
-    const notes = db.prepare(`SELECT id, mid, sfld, tags FROM notes WHERE id IN (?${",?".repeat(noteIDList.length - 1)})`).all(...noteIDList);
+    let cards;
+    let notes;
+    console.timeLog("start");
+    if (numDeck !== numTotal) {
+        
+        cards = db.prepare(`SELECT nid FROM cards WHERE did ${numDeck / numTotal > 0.5 ? "!" : ""}= ?`).all(args.id);
+        const noteIDList = getUniqueEntries(cards, "nid");
+    
+        notes = db.prepare(`SELECT id, mid, sfld, tags FROM notes WHERE id ${numDeck / numTotal > 0.5 ? "NOT " : ""}IN (?${",?".repeat(noteIDList.length - 1)})`).all(...noteIDList);
+        
+    } else {
+        notes = db.prepare("SELECT id, mid, sfld, tags FROM notes").all();
+    }
+
     let models = JSON.parse(db.prepare("SELECT models FROM col").get().models);
     console.timeEnd("start");
 

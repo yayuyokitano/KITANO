@@ -1,6 +1,7 @@
 import * as request from "../helpers/request";
 import * as typeHandler from "./typeHandler";
-import * as template from "../helpers/template";
+//import { comfortable } from "../plugin/comfortablejs/comfortable";
+const comfortable = require("../plugin/comfortablejs/comfortable.js");
 
 export function prepareDeckEdit (settingList:any) {
     const settings = settingList[0];
@@ -54,31 +55,68 @@ export function prepareNoteEdit(args:any) {
 
     const content = document.querySelector("#editorContent") as HTMLElement;
     const display = document.querySelector("#editorDisplay") as HTMLElement;
-    display.style.display = "none";
     content.style.marginLeft = `${sidebar.offsetWidth}px`;
 
-    let table = "<table class='display'><thead><th>Sort Field</th><th>Note Type</th><th>tags</th></thead><tbody>";
-    for (let note of args.notes) {
-        table += `<tr><td>${note.sfld}</td><td>${args.models[note.mid].name}</td><td>${note.tags.trim()}</td></tr>`;
-    }
-    table += "</tbody></table>";
+    let table = comfortable.fromTemplate({
+        thead: [
+            [
+                {
+                    label: "Sort Field",
+                    dataField: "sfld"
+                },
+                {
+                    label: "Note Type",
+                    dataField: "modelName"
+                },
+                {
+                    label: "Tags",
+                    dataField: "tags"
+                }
+            ]
+        ],
+        tbody: [
+            [
+                {
+                    dataField: "sfld",
+                    dataType: "string"
+                },
+                {
+                    dataField: "modelName",
+                    dataType: "string"
+                },
+                {
+                    dataField: "tags",
+                    dataType: "string"
+                },
+            ]
+        ]
+    });
 
-    display.innerHTML += `<div settingid="Notes" class="display">${table}</div>`;
+    table.$el.style.width = '100%';
+
+    let items = [];
+    for (let note of args.notes) {
+        items.push({
+            sfld: note.sfld,
+            modelName: args.models[note.mid].name,
+            tags: note.tags.trim()
+        })
+    }
+    table.model.items = items;
+
+    table.invalidate();
+
+    window.addEventListener("resize", () => {
+        updateTableSize(table, ["sfld", "modelName", "tags"]);
+    })
+
+    display.appendChild(table.$el);
+    
+    updateTableSize(table, ["sfld", "modelName", "tags"]);
 
     setTimeout(() => {
-        display.style.display = "block";
         (document.querySelector("#editorSearch") as HTMLElement).style.display = "block";
-        adjustTableWidth();
     })
-}
-
-export function adjustTableWidth () {
-    const headers = document.querySelectorAll("#editorDisplay .display th");
-    const firstRow = document.querySelectorAll("#editorDisplay .display tbody tr:first-child td");
-
-    for (let i = 0; i < document.querySelector("#editorDisplay .display tbody tr")?.childElementCount; i++) {
-        (headers[i] as HTMLElement).style.width = `${(firstRow[i] as HTMLElement).offsetWidth}px`;
-    }
 }
 
 export function prepareCard (deckData:any) {
@@ -159,4 +197,21 @@ function processFields(card:string, fields:any) {
         cardSplit[i] = field + fieldSuffix;
     }
     return cardSplit.join("");
+}
+
+function updateTableSize (table:any, properties:any) {
+    table.$el.style.height = `calc(100vh - ${table.$el.getBoundingClientRect().y}px)`;
+    let cellWidth = {};
+    for (let item of table.model.items) {
+        for (let [index, property] of properties.entries()) {
+            cellWidth[index] = cellWidth[index] > item[property]?.length ? cellWidth[index] : item[property]?.length;
+        }
+    }
+    const fontSize = 16;
+    const maxWidth = window.innerWidth * 0.5;
+    Object.keys(cellWidth).map(key => {
+        cellWidth[key] = Math.min(cellWidth[key] * fontSize, maxWidth);
+    })
+    table.model.cellWidth = cellWidth;
+    table.invalidate();
 }
