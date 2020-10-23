@@ -155,12 +155,15 @@ export function modifyDeckSetting (args:any) {
 }
 
 export function getDeckContent (args:any) {
+    console.time("start");
     const db = new sqlite3(path.join(decksPath, args.path, "collection.anki2"));
-    const cards = db.prepare("SELECT * FROM cards WHERE did = ?").all(args.id);
+    const cards = db.prepare("SELECT nid FROM cards WHERE did = ?").all(args.id);
+    console.timeLog("start");
 
     const noteIDList = getUniqueEntries(cards, "nid");
-    const notes = db.prepare(`SELECT * FROM notes WHERE id IN (?${",?".repeat(noteIDList.length - 1)})`).all(...noteIDList);
+    const notes = db.prepare(`SELECT id, mid, sfld, tags FROM notes WHERE id IN (?${",?".repeat(noteIDList.length - 1)})`).all(...noteIDList);
     let models = JSON.parse(db.prepare("SELECT models FROM col").get().models);
+    console.timeEnd("start");
 
     main.sendData({ notes, models }, "prepareNoteEdit");
 

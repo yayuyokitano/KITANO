@@ -41,11 +41,11 @@ export function updateDeckSettings (target:HTMLInputElement, navInstruction:stri
 }
 
 export function prepareCardEdit (deckData:any) {
-    let table = "<table>";
+    /*let table = "<table>";
     for (let card of deckData.cards) {
         table += template.deckTableRow(card, deckData.sortedNotes[card.nid], deckData.models);
     }
-    //document.querySelector("#strongPopup").innerHTML = table + "</table>";
+    document.querySelector("#strongPopup").innerHTML = table + "</table>";*/
 }
 
 export function prepareNoteEdit(args:any) {
@@ -53,16 +53,32 @@ export function prepareNoteEdit(args:any) {
     sidebar.innerHTML += "<li>Notes</li>";
 
     const content = document.querySelector("#editorContent") as HTMLElement;
+    const display = document.querySelector("#editorDisplay") as HTMLElement;
+    display.style.display = "none";
     content.style.marginLeft = `${sidebar.offsetWidth}px`;
 
-    let table = "<table><th>Sort Field</th><th>Note Type</th><th>tags</th>";
+    let table = "<table class='display'><thead><th>Sort Field</th><th>Note Type</th><th>tags</th></thead><tbody>";
     for (let note of args.notes) {
         table += `<tr><td>${note.sfld}</td><td>${args.models[note.mid].name}</td><td>${note.tags.trim()}</td></tr>`;
     }
-    table += "</table>";
+    table += "</tbody></table>";
 
-    const display = document.querySelector("#editorDisplay") as HTMLElement;
     display.innerHTML += `<div settingid="Notes" class="display">${table}</div>`;
+
+    setTimeout(() => {
+        display.style.display = "block";
+        (document.querySelector("#editorSearch") as HTMLElement).style.display = "block";
+        adjustTableWidth();
+    })
+}
+
+export function adjustTableWidth () {
+    const headers = document.querySelectorAll("#editorDisplay .display th");
+    const firstRow = document.querySelectorAll("#editorDisplay .display tbody tr:first-child td");
+
+    for (let i = 0; i < document.querySelector("#editorDisplay .display tbody tr")?.childElementCount; i++) {
+        (headers[i] as HTMLElement).style.width = `${(firstRow[i] as HTMLElement).offsetWidth}px`;
+    }
 }
 
 export function prepareCard (deckData:any) {
