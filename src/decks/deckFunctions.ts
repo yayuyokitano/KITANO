@@ -97,7 +97,7 @@ export function prepareNoteEdit(args:any) {
     let items = [];
     for (let note of args.notes) {
         items.push({
-            sfld: note.sfld,
+            sfld: note.sfld.toString(),
             modelName: args.models[note.mid].name,
             tags: note.tags.trim()
         })
