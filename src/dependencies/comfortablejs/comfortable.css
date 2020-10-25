@@ -9,6 +9,10 @@
  *  http://www.opensource.org/licenses/mit-license.php
  */
 
+/*!
+ * This document has been modified to fit the needs of https://github.com/yayuyokitano/KITANO
+ */
+
 .ctj-v-resize-line {
   border-left-style: dashed;
   border-left-color: rgba(0,0,0,0.8);
@@ -183,20 +187,34 @@ TABLE.ctj-cal-table TD.ctj-current-date:hover {
  *  http://www.opensource.org/licenses/mit-license.php
  */
 
+.ctj-readonly {
+  user-select: none;
+}
+
 .ctj-header {
   font-weight: bold;
+  cursor: default;
 }
 
 .ctj-even {
-  background-color: rgba(0,0,0,0.05);
+  background-color: var(--primary-background);
+}
+
+.ctj-odd {
+  background-color: var(--accent-highlight);
+}
+
+.ctj-clickable-op {
+  cursor: pointer;
 }
 
 .ctj-item-hover {
-  background-color: rgba(255,255,0,0.1);
+  background-color: var(--accent-color);
+  cursor: pointer;
 }
 
 .ctj-item-selected {
-  background-color: rgba(255,127,0,0.1);
+  background-color: var(--secondary-accent-color);
 }
 
 .ctj-clickable:hover {

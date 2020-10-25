@@ -1,3 +1,7 @@
+/*!
+ * This document has been modified to fit the needs of https://github.com/yayuyokitano/KITANO
+ */
+
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||

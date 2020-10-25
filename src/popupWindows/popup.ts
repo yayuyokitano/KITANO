@@ -19,12 +19,12 @@ export function openCardEdit(target:any) {
 }
 
 function openStrongPopup(targetElement:HTMLElement, settingMap:object) {
-    document.querySelector("#strongPopup").classList.remove("hidden");
+    openPopup("#strongPopup");
 }
 
 export function closeStrongPopup() {
     document.querySelector("#strongPopup").innerHTML = "";
-    document.querySelector("#strongPopup").classList.add("hidden");
+    closePopup("#strongPopup");
 }
 
 function openMainPopup(targetElement:HTMLElement, settingMap:object) {
@@ -49,9 +49,6 @@ export function openPopup(popupSelector:string) {
 }
 
 export function closePopup(popupSelector:string) {
-
-    console.log(document.querySelector(popupSelector));
-    console.log((document.querySelector(popupSelector)?.getAttribute("changed")));
 
     if (document.querySelector(popupSelector)?.getAttribute("changed")) {
         document.querySelector(".deckList").innerHTML = "";

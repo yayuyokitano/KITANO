@@ -38,7 +38,7 @@ input[type="text"] {
   display: flex;
 }
 
-#popupSetting,
+.popupSetting,
 #editorSidebar {
   list-style-type: none;
   margin: 0;
@@ -47,8 +47,7 @@ input[type="text"] {
   transition: 400ms;
 }
 
-#popupSetting li,
-#editorSidebar li {
+.popupSetting li {
   padding: 0.5rem 1rem;
   cursor: pointer;
   background-color: var(--accent-color);
@@ -57,17 +56,13 @@ input[type="text"] {
   outline: none;
 }
 
-#popupSetting li:hover,
-#popupSetting li:focus,
-#popupSetting .currLi,
-#editorSidebar li:hover,
-#editorSidebar li:focus,
-#editorSidebar .currLi {
+.popupSetting li:hover,
+.popupSetting li:focus,
+.popupSetting .currLi {
   background-color: var(--accent-highlight);
 }
 
-#popupContent,
-#editorContent {
+.popupContent {
   background-color: var(--primary-background);
   transition: 200ms;
   flex: 1;

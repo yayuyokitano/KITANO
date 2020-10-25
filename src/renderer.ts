@@ -48,3 +48,5 @@ import * as listeners from "./popupWindows/functions";
 
 import "./renderer/initialize";
 import "./listeners/deckExtraction";
+
+import "./dependencies/comfortablejs/comfortable.css";

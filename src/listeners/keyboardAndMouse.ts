@@ -21,9 +21,9 @@ window.addEventListener("click", e => {
 
 window.addEventListener("keydown", e => {
     if (e.key === "Escape") {
-        if (document.querySelector(".faded")) {
+        if (document.querySelector(".popup:not(.hidden)")) {
             popup.closeWeakPopup(".popup:not(.hidden)");
-        } else if (document.querySelector("#strongPopup")) {
+        } else if (document.querySelector("#strongPopup:not(.hidden)")) {
             popup.closeStrongPopup();
         }
         

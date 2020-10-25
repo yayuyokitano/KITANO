@@ -51,7 +51,7 @@ export function prepareCardEdit (deckData:any) {
 
 export function prepareNoteEdit(args:any) {
     const sidebar = document.querySelector("#editorSidebar") as HTMLElement;
-    sidebar.innerHTML += "<li>Notes</li>";
+    sidebar.innerHTML += "<li tabindex='0' class='currLi'>Notes</li>";
 
     const content = document.querySelector("#editorContent") as HTMLElement;
     const display = document.querySelector("#editorDisplay") as HTMLElement;
@@ -78,21 +78,25 @@ export function prepareNoteEdit(args:any) {
             [
                 {
                     dataField: "sfld",
-                    dataType: "string"
+                    dataType: "string",
+                    editable: false
                 },
                 {
                     dataField: "modelName",
-                    dataType: "string"
+                    dataType: "string",
+                    editable: false
                 },
                 {
                     dataField: "tags",
-                    dataType: "string"
+                    dataType: "string",
+                    editable: false
                 },
             ]
         ]
     });
 
     table.$el.style.width = '100%';
+    table.$el.style.outline = 'none';
 
     let items = [];
     for (let note of args.notes) {
