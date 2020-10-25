@@ -436,9 +436,9 @@ label {
 }
 
 #editorDisplay {
-  padding-top: 4rem;
+  padding-top: 3.7rem;
   min-width: 50%;
-  overflow: auto;
+  overflow: visible;
 }
 
 #editorSearch input {

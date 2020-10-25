@@ -206,6 +206,7 @@ TABLE.ctj-cal-table TD.ctj-current-date:hover {
 
 .ctj-clickable-op {
   cursor: pointer;
+  margin-top: 0.15rem;
 }
 
 .ctj-item-hover {

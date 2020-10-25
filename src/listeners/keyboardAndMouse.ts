@@ -16,7 +16,7 @@ window.addEventListener("click", e => {
 
         document.querySelector("#popupSetting .currLi").classList.remove("currLi");
         document.querySelector(`#popupSetting li[value="${currMenu}"]`).classList.add("currLi");
-    }
+    }    
 })
 
 window.addEventListener("keydown", e => {
