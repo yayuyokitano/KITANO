@@ -107,6 +107,7 @@ export function prepareNoteEdit(args:any) {
         })
     }
     table.model.items = items;
+    table.model.multipleRowsSelectable = true;
 
     table.invalidate();
 

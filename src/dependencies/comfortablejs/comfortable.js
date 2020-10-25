@@ -4462,18 +4462,55 @@ var comfortable;
                 for (var k in this.model.selectedRows) {
                     lastSelectedRows[k] = true;
                 }
-                if (this.model.multipleRowsSelectable && detail.originalEvent.ctrlKey) {
-                    if (!this.model.selectedRows[detail.itemIndex.row]) {
-                        this.model.selectedRows[detail.itemIndex.row] = true;
-                    }
-                    else {
-                        delete this.model.selectedRows[detail.itemIndex.row];
-                    }
-                }
-                else {
+
+                if (!this.model.multipleRowsSelectable) {
                     this.model.selectedRows = {};
                     this.model.selectedRows[detail.itemIndex.row] = true;
                 }
+                else {
+                    var changed = false;
+                    var changeLastSelected = true;
+                    if (!detail.originalEvent.ctrlKey) {
+                        this.model.selectedRows = {};
+                    }
+                    if (detail.originalEvent.ctrlKey && !detail.originalEvent.shiftKey) {
+                        changed = true;
+                        if (!this.model.selectedRows[detail.itemIndex.row]) {
+                            this.model.selectedRows[detail.itemIndex.row] = true;
+                        }
+                        else {
+                            delete this.model.selectedRows[detail.itemIndex.row];
+                        }
+                    }
+                    else if (detail.originalEvent.shiftKey && this.model.lastChangedRow) {
+                        changed = true;
+                        if (detail.originalEvent.ctrlKey) {
+                            if (this.model.selectedRows[this.model.lastChangedRow]) {
+                                for (var i = Math.min(this.model.lastChangedRow, detail.itemIndex.row); i <= Math.max(this.model.lastChangedRow, detail.itemIndex.row); i++) {
+                                    this.model.selectedRows[i] = true;
+                                }
+                            }
+                            else {
+                                for (var i = Math.min(this.model.lastChangedRow, detail.itemIndex.row); i <= Math.max(this.model.lastChangedRow, detail.itemIndex.row); i++) {
+                                    delete this.model.selectedRows[i];
+                                }
+                            }
+                        }
+                        else {
+                            changeLastSelected = false;
+                            for (var i = Math.min(this.model.lastChangedRow, detail.itemIndex.row); i <= Math.max(this.model.lastChangedRow, detail.itemIndex.row); i++) {
+                                this.model.selectedRows[i] = true;
+                            }
+                        }
+                    }
+                    if (!changed) {
+                        this.model.selectedRows[detail.itemIndex.row] = true;
+                    }
+                    if (changeLastSelected) {
+                        this.model.lastChangedRow = detail.itemIndex.row;
+                    }
+                }
+                
                 var changed = false;
                 for (var k in this.model.selectedRows) {
                     if (lastSelectedRows[k]) {
