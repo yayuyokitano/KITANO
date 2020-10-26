@@ -109,7 +109,16 @@ export function prepareNoteEdit(args:any) {
     table.model.items = items;
     table.model.multipleRowsSelectable = true;
 
-    table.invalidate();
+    table.model.on("rowselectionchange", (event, detail) => {
+        const popupDetail = document.querySelector("#strongPopupDetail");
+        if (Object.keys(detail.selectedRows).length > 0 !== popupDetail.classList.contains("display")) {
+            popupDetail.classList.toggle("display");
+            popupDetail.addEventListener("transitionend", function efn() {
+                table.invalidate();
+                popupDetail.removeEventListener("transitionend", efn);
+            })
+        }
+    })
 
     window.addEventListener("resize", () => {
         updateTableSize(table, ["sfld", "modelName", "tags"]);

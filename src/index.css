@@ -412,10 +412,23 @@ label {
   transition: left 200ms ease-in-out;
   overflow-y: auto;
   display: flex;
+  overflow-x: hidden;
 }
 
 #strongPopup.hidden {
   left: -100vw;
+}
+
+#strongPopupDetail {
+  width: 30vw;
+  margin-right: -30vw;
+  height: 100vh;
+  background-color: black;
+  transition: margin-right 200ms;
+}
+
+#strongPopupDetail.display {
+  margin-right: 0;
 }
 
 #editorSearch {
